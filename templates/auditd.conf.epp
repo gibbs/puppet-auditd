@@ -1,0 +1,83 @@
+<%- | Auditd::Conf $config,
+| -%>
+# THIS FILE IS MANAGED BY PUPPET
+
+local_events=<%= $config['local_events'] %>
+log_file=<%= $config['log_file'] %>
+write_logs=<%= $config['write_logs'] %>
+log_format=<%= $config['log_format'] %>
+log_group=<%= $config['log_group'] %>
+priority_boost=<%= $config['priority_boost'] %>
+flush=<%= $config['flush'] %>
+freq=<%= $config['freq'] %>
+<% if $config['dispatcher'] { -%>
+dispatcher=<%= $config['dispatcher'] %>
+<% } -%>
+<% if $config['disp_qos'] { -%>
+disp_qos=<%= $config['disp_qos'] %>
+<% } -%>
+num_logs=<%= $config['num_logs'] %>
+name_format=<%= $config['name_format'] %>
+<% if $config['name'] { -%>
+name=<%= $config['name'] %>
+<% } -%>
+max_log_file=<%= $config['max_log_file'] %>
+max_log_file_action=<%= $config['max_log_file_action'] %>
+<% if str2bool($config['verify_email']) { -%>
+verify_email=<%= $config['verify_email'] %>
+<% } -%>
+action_mail_acct=<%= $config['action_mail_acct'] %>
+space_left=<%= $config['space_left'] %>
+space_left_action=<%= $config['space_left_action'] %>
+admin_space_left=<%= $config['admin_space_left'] %>
+admin_space_left_action=<%= $config['admin_space_left_action'] %>
+disk_full_action=<%= $config['disk_full_action'] %>
+disk_error_action=<%= $config['disk_error_action'] %>
+<% if $config['tcp_listen_port'] { -%>
+tcp_listen_port=<%= $config['tcp_listen_port'] %>
+<% } -%>
+<% if $config['tcp_listen_queue'] { -%>
+tcp_listen_queue=<%= $config['tcp_listen_queue'] %>
+<% } -%>
+<% if $config['tcp_max_per_addr'] { -%>
+tcp_max_per_addr=<%= $config['tcp_max_per_addr'] %>
+<% } -%>
+<% if $config['use_libwrap'] { -%>
+use_libwrap=<%= $config['use_libwrap'] %>
+<% } -%>
+<% if $config['tcp_client_ports'] { -%>
+tcp_client_ports=<%= $config['tcp_client_ports'] %>
+<% } -%>
+<% if $config['tcp_client_max_idle'] { -%>
+tcp_client_max_idle=<%= $config['tcp_client_max_idle'] %>
+<% } -%>
+<% if $config['transport'] { -%>
+transport=<%= $config['transport'] %>
+<% } -%>
+<% if $config['enable_krb5'] { -%>
+enable_krb5=<%= $config['enable_krb5'] %>
+<% } -%>
+<% if $config['krb5_principal'] { -%>
+krb5_principal=<%= $config['krb5_principal'] %>
+<% } -%>
+<% if $config['krb5_key_file'] { -%>
+krb5_key_file=<%= $config['krb5_key_file'] %>
+<% } -%>
+<% if $config['distribute_network'] { -%>
+distribute_network=<%= $config['distribute_network'] %>
+<% } -%>
+<% if $config['q_depth'] { -%>
+q_depth=<%= $config['q_depth'] %>
+<% } -%>
+<% if $config['overflow_action'] { -%>
+overflow_action=<%= $config['overflow_action'] %>
+<% } -%>
+<% if $config['max_restarts'] { -%>
+max_restarts=<%= $config['max_restarts'] %>
+<% } -%>
+<% if $config['plugin_dir'] { -%>
+plugin_dir=<%= $config['plugin_dir'] %>
+<% } -%>
+<% if $config['end_of_event_timeout'] { -%>
+end_of_event_timeout=<%= $config['end_of_event_timeout'] %>
+<% } -%>

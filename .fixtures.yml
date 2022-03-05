@@ -1,0 +1,10 @@
+---
+fixtures:
+  repositories:
+    facts: https://github.com/puppetlabs/puppetlabs-facts.git
+    provision: https://github.com/puppetlabs/provision.git
+    puppet_agent: https://github.com/puppetlabs/puppetlabs-puppet_agent.git
+    concat: https://github.com/puppetlabs/puppetlabs-concat
+    stdlib: https://github.com/puppetlabs/puppetlabs-stdlib
+  symlinks:
+    auditd: "#{source_dir}"

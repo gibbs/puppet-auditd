@@ -1,0 +1,38 @@
+---
+auditd::package_ensure: installed
+auditd::service_enable: true
+auditd::service_ensure: running
+
+# Rules
+auditd::rules_file: /etc/audit/rules.d/audit.rules
+auditd::buffer_size: 8192
+auditd::failure_mode: 1
+auditd::immutable: false
+
+# Daemon configuration
+auditd::config:
+  local_events: 'yes'
+  log_file: /var/log/auditd.log
+  write_logs: 'yes'
+  log_format: raw
+  log_group: root
+  priority_boost: 4
+  flush: incremental
+  freq: 20
+  num_logs: 4
+  name_format: none
+  max_log_file: 25
+  max_log_file_action: rotate
+  verify_email: 'no'
+  action_mail_acct: root
+  space_left: 75
+  space_left_action: email
+  admin_space_left: 50
+  admin_space_left_action: email
+  disk_full_action: rotate
+  disk_error_action: syslog
+  tcp_listen_queue: 5
+  tcp_client_max_idle: 0
+  enable_krb5: 'no'
+  krb5_principal: auditd
+  distribute_network: 'no'

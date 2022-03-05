@@ -1,0 +1,11 @@
+## Remove any existing rules
+-D
+
+## Buffer Size
+## Feel free to increase this if the machine panic's
+-b <%= $buffer_size %>
+
+## Failure Mode
+## Possible values are 0 (silent), 1 (printk, print a failure message),
+## and 2 (panic, halt the system).
+-f <%= $failure_mode %>

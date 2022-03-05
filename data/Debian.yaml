@@ -1,0 +1,6 @@
+---
+auditd::package_name: auditd
+auditd::config:
+  disp_qos: lossy
+  dispatcher: /sbin/audispd
+  log_group: adm
