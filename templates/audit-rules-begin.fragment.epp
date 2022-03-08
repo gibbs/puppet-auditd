@@ -1,3 +1,5 @@
+# THIS FILE IS MANAGED BY PUPPET
+
 ## Remove any existing rules
 -D
 
