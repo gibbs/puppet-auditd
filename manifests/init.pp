@@ -36,18 +36,18 @@
 # @author Dan Gibbs <dev@dangibbs.co.uk>
 #
 class auditd (
-  String[1] $package_name                     = 'auditd',
-  String $package_ensure                      = 'installed',
-  Boolean $service_enable                     = true,
-  String[1] $service_name                     = 'auditd',
-  Stdlib::Ensure::Service $service_ensure     = 'running',
-  Stdlib::Absolutepath $rules_file            = '/etc/audit/rules.d/audit.rules',
-  Optional[Hash[String, Auditd::Rule]] $rules = {},
-  Auditd::Conf $config                        = {},
-  Integer $buffer_size                        = 8192,
-  Integer $failure_mode                       = 1,
-  Boolean $immutable                          = false,
-  Boolean $syslog_output                      = true,
+  String[1] $package_name                      = 'auditd',
+  String $package_ensure                       = 'installed',
+  Boolean $service_enable                      = true,
+  String[1] $service_name                      = 'auditd',
+  Stdlib::Ensure::Service $service_ensure      = 'running',
+  Stdlib::Absolutepath $rules_file             = '/etc/audit/rules.d/audit.rules',
+  Optional[Hash[String, Auditd::Rules]] $rules = {},
+  Auditd::Conf $config                         = {},
+  Integer $buffer_size                         = 8192,
+  Integer $failure_mode                        = 1,
+  Boolean $immutable                           = false,
+  Boolean $syslog_output                       = true,
 ) {
 
   contain auditd::package
