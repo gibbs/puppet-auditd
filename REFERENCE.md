@@ -23,6 +23,7 @@
 ### Data types
 
 * [`Auditd::Conf`](#auditdconf): auditd.conf configuration file parameters
+* [`Auditd::Rules`](#auditdrules): auditd.conf configuration file parameters
 
 ## Classes
 
@@ -38,6 +39,7 @@ The following parameters are available in the `auditd` class:
 * [`package_ensure`](#package_ensure)
 * [`service_enable`](#service_enable)
 * [`service_name`](#service_name)
+* [`rules`](#rules)
 * [`rules_file`](#rules_file)
 * [`config`](#config)
 * [`buffer_size`](#buffer_size)
@@ -77,6 +79,14 @@ Data type: `String[1]`
 The service name to use
 
 Default value: `'auditd'`
+
+##### <a name="rules"></a>`rules`
+
+Data type: `Optional[Hash[String, Auditd::Rules]]`
+
+Hash of auditd rules to set
+
+Default value: `{}`
 
 ##### <a name="rules_file"></a>`rules_file`
 
@@ -212,6 +222,19 @@ Struct[{
     Optional['max_restarts']            => Integer[0],
     Optional['plugin_dir']              => Stdlib::Absolutepath,
     Optional['end_of_event_timeout']    => Integer[0],
+  }]
+```
+
+### <a name="auditdrules"></a>`Auditd::Rules`
+
+auditd.conf configuration file parameters
+
+Alias of
+
+```puppet
+Struct[{
+    Optional['content'] => String,
+    Optional['order']   => Integer[1, 100],
   }]
 ```
 
