@@ -1,5 +1,9 @@
 # auditd
 
+[![Build Status](https://github.com/gibbs/puppet-auditd/workflows/CI/badge.svg)](https://github.com/gibbs/puppet-auditd/actions?query=workflow%3ACI)
+[![Release](https://github.com/gibbs/puppet-auditd/workflows/Release/badge.svg)](https://github.com/gibbs/puppet-auditd/actions?query=workflow%3ARelease)
+[![Apache-2 License](https://img.shields.io/github/license/gibbs/puppet-auditd.svg)](LICENSE)
+
 ## Overview
 
 This module installs, configures and manages auditd. No default rules are
@@ -24,7 +28,7 @@ include auditd
 
 ### Rules
 
-The `audit::rule` define is used to create and manage auditd rules.
+The `auditd::rule` define is used to create and manage auditd rules.
 
 ```puppet
 auditd::rule { 'insmod':
