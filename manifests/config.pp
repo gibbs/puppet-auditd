@@ -1,5 +1,4 @@
-# @summary
-#   Manages the auditd daemon configuration and rules
+# @summary auditd configuration
 #
 # @api private
 #

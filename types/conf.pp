@@ -1,4 +1,4 @@
-# auditd.conf - audit daemon configuration file
+# auditd.conf configuration file parameters
 type Auditd::Conf = Struct[
   {
     Optional['local_events']            => Enum['yes', 'no'],

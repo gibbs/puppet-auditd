@@ -1,26 +1,31 @@
-# @summary
-#   audit daemon
+# @summary audit daemon
 #
 # @param package_name
-#   The package name to manage
+#   The package name to use
 #
 # @param package_ensure
-#   The package state
+#   The package state to set
 #
 # @param service_enable
 #   The service enable state
 #
 # @param service_name
-#   The service name to manage
-#
-# @param rules_dir
-#   The rules directory path to use
+#   The service name to use
 #
 # @param rules_file
 #   The rules file to use
 #
 # @param config
-#   audit daemon configuration hash
+#   auditd.conf configuration hash
+#
+# @param buffer_size
+#   The buffer size to use
+#
+# @param failure_mode
+#   The failure mode (defaults to printing failure message)
+#
+# @param immutable
+#   Make the configuration immutable
 #
 # @param syslog_output
 #   Enable syslog output

@@ -1,5 +1,4 @@
-# @summary
-#   Manages the auditd service
+# @summary auditd service management
 #
 # @api private
 #

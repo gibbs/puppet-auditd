@@ -1,5 +1,4 @@
-# @summary
-#   Manages the auditd package
+# @summary auditd package management
 #
 # @api private
 #
