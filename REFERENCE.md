@@ -23,7 +23,7 @@
 ### Data types
 
 * [`Auditd::Conf`](#auditdconf): auditd.conf configuration file parameters
-* [`Auditd::Rules`](#auditdrules): auditd.conf configuration file parameters
+* [`Auditd::Rules`](#auditdrules): auditd rule parameters
 
 ## Classes
 
@@ -227,14 +227,14 @@ Struct[{
 
 ### <a name="auditdrules"></a>`Auditd::Rules`
 
-auditd.conf configuration file parameters
+auditd rule parameters
 
 Alias of
 
 ```puppet
 Struct[{
     Optional['content'] => String,
-    Optional['order']   => Integer[1, 100],
+    Optional['order']   => Integer[1, 99],
   }]
 ```
 
