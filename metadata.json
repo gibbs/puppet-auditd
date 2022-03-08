@@ -2,11 +2,13 @@
   "name": "genv-auditd",
   "version": "0.1.0",
   "author": "Dan Gibbs <dev@dangibbs.co.uk>",
-  "summary": "Installs, configures, and manage auditd",
+  "summary": "Install, configure, and manage the audit daemon",
   "license": "Apache-2.0",
   "source": "https://github.com/gibbs/puppet-auditd",
   "tags": [
-    "auditd"
+    "auditd",
+    "audit",
+    "audispd"
   ],
   "dependencies": [
     {
