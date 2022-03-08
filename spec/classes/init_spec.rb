@@ -34,6 +34,25 @@ describe 'auditd' do
 
         it { is_expected.to contain_file('/etc/audisp/plugins.d/syslog.conf') }
         it { is_expected.to contain_file('/sbin/audispd') }
+
+        context 'documentation example' do
+          let(:params) do
+            {
+              rules: {
+                insmod: {
+                  content: '-w /sbin/insmod -p x -k modules',
+                  order:   10,
+                },
+                sudoers_changes: {
+                  content: '-w /etc/sudoers -p wa -k scope',
+                  order:   50,
+                },
+              },
+            }
+          end
+
+          it { is_expected.to compile }
+        end
       end
     end
   end
