@@ -6,9 +6,10 @@ class auditd::config {
   assert_private()
 
   concat { $auditd::rules_file:
-    mode  => '0600',
-    owner => 0,
-    group => 0,
+    mode   => '0600',
+    owner  => 0,
+    group  => 0,
+    notify => Service['auditd'],
   }
 
   concat::fragment { 'auditd_rules_begin':
@@ -36,6 +37,7 @@ class auditd::config {
     content => epp('auditd/auditd.conf.epp', {
       config => $auditd::config,
     }),
+    notify  => Service['auditd'],
   }
 
   file { '/etc/audisp/plugins.d/syslog.conf':
