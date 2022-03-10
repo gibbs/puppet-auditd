@@ -4,18 +4,18 @@ auditd::config:
   write_logs: 'yes'
   log_file: /var/log/audit/audit.log
   log_group: adm
-  log_format: raw
-  flush: incremental_async
+  log_format: RAW
+  flush: INCREMENTAL_ASYNC
   freq: 50
   max_log_file: 8
   num_logs: 5
   priority_boost: 4
   disp_qos: lossy
   dispatcher: /sbin/audispd
-  name_format: none
-  max_log_file_action: rotate
+  name_format: NONE
+  max_log_file_action: ROTATE
   space_left: 75
-  space_left_action: syslog
+  space_left_action: SYSLOG
   verify_email: 'yes'
   action_mail_acct: root
   admin_space_left: 50
