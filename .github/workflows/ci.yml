@@ -55,9 +55,35 @@ jobs:
       - name: Run tests
         run: bundle exec rake parallel_spec
 
+  acceptance:
+    name: Litmus Acceptance
+    runs-on: ubuntu-20.04
+    env:
+      BOLT_GEM: true
+      CI: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7.3'
+          bundler-cache: true
+
+      - name: Provision Testing Environments
+        run: |
+          bundle exec rake 'litmus:provision_list[default]'
+          bundle exec rake 'litmus:install_agent'
+          bundle exec rake 'litmus:install_module'
+      - name: Run Tests
+        run: bundle exec rake 'litmus:acceptance:parallel'
+
+      - name: Tear Down
+        run: bundle exec rake 'litmus:tear_down'
+
   tests:
     needs:
       - unit
+      - acceptance
     runs-on: ubuntu-20.04
     name: Test suite
     steps:
