@@ -40,6 +40,16 @@ class auditd::config {
     notify  => Service['auditd'],
   }
 
+  file {[
+    '/etc/audisp/',
+    '/etc/audisp/plugins.d/',
+  ]:
+    ensure => directory,
+    mode   => '0750',
+    owner  => 0,
+    group  => 0,
+  }
+
   file { '/etc/audisp/plugins.d/syslog.conf':
     ensure  => file,
     content => epp('auditd/audisp_syslog_plugin.conf.epp', {
@@ -48,6 +58,7 @@ class auditd::config {
     mode    => '0640',
     owner   => 0,
     group   => 0,
+    require => File['/etc/audisp/plugins.d/'],
   }
 
   file { '/sbin/audispd':
