@@ -30,7 +30,6 @@ include auditd
 
 The `auditd::config` parameter is used to configure the `auditd.conf` file:
 
-- For consistency all values must be lowercase (e.g. `syslog` and not `SYSLOG`)
 - By default actions use `rotate/syslog` instead of `suspend/halt`
 - Key names are based on documented settings in `man auditd.conf`
 
