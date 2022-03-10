@@ -212,7 +212,7 @@ Struct[{
     Optional['use_libwrap']             => Enum['yes', 'no'],
     Optional['tcp_client_ports']        => Variant[Integer, String],
     Optional['tcp_client_max_idle']     => Integer,
-    Optional['transport']               => Enum['TCP', 'KRB5'],
+    Optional['transport']               => Enum['tcp', 'krb5'],
     Optional['enable_krb5']             => Enum['yes', 'no'],
     Optional['krb5_principal']          => String,
     Optional['krb5_key_file']           => Stdlib::Absolutepath,
