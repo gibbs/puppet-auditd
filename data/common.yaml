@@ -3,15 +3,40 @@ auditd::package_ensure: installed
 auditd::service_enable: true
 auditd::service_ensure: running
 
+# Root audit directory
+auditd::path: /etc/audit
+auditd::mode: '0750'
+auditd::owner: 0
+auditd::group: 0
+
 # Plugins
 auditd::plugin_dir: /etc/audit/plugins.d
+auditd::plugin_dir_mode: '0750'
+auditd::plugin_dir_owner: 0
+auditd::plugin_dir_group: 0
 
-# Rules
+# Rules directory
 auditd::rules_dir: /etc/audit/rules.d
+auditd::rules_dir_mode: '0750'
+auditd::rules_dir_owner: 0
+auditd::rules_dir_group: 0
+
+# Rules file
 auditd::rules_file: /etc/audit/rules.d/audit.rules
+auditd::rules_file_mode: '0600'
+auditd::rules_file_owner: 0
+auditd::rules_file_group: 0
+
+# Rule configuration
 auditd::buffer_size: 8192
 auditd::failure_mode: 1
 auditd::immutable: false
+
+# Configuration file
+auditd::config_path: /etc/audit/auditd.conf
+auditd::config_mode: '0600'
+auditd::config_owner: 0
+auditd::config_group: 0
 
 # Daemon configuration
 auditd::config:

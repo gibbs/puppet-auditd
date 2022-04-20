@@ -68,13 +68,6 @@ describe 'include class' do
     it { is_expected.to be_owned_by 'root' }
   end
 
-  describe file('/etc/audisp/plugins.d/') do
-    it { is_expected.to exist }
-    it { is_expected.to be_directory }
-    it { is_expected.to be_mode 7_50 }
-    it { is_expected.to be_owned_by 'root' }
-  end
-
   describe file('/etc/audit/rules.d/audit.rules') do
     it { is_expected.to exist }
     it { is_expected.to be_file }

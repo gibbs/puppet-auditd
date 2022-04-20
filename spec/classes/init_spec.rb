@@ -36,9 +36,6 @@ describe 'auditd' do
         it { is_expected.to contain_concat__fragment('auditd_rules_begin') }
         it { is_expected.to contain_concat__fragment('auditd_rules_end') }
 
-        it { is_expected.to contain_file('/etc/audisp/plugins.d/syslog.conf') }
-        it { is_expected.to contain_file('/sbin/audispd') }
-
         context 'documentation example' do
           let(:params) do
             {

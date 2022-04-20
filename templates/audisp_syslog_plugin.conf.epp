@@ -1,7 +1,0 @@
-# THIS FILE IS MANAGED BY PUPPET
-active = <%= bool2str($syslog_output) %>
-direction = out
-path = builtin_syslog
-type = builtin
-args = LOG_INFO
-format = string

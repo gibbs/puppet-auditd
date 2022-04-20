@@ -5,23 +5,31 @@
 class auditd::config {
   assert_private()
 
-  file {[
-    '/etc/audit/',
-    '/etc/audisp/',
-    '/etc/audisp/plugins.d/',
-    $auditd::plugin_dir,
-    $auditd::rules_dir,
-  ]:
+  file { $auditd::dir:
     ensure => directory,
-    mode   => '0750',
-    owner  => 0,
-    group  => 0,
+    owner  => $auditd::owner,
+    group  => $auditd::group,
+    mode   => $auditd::mode,
+  }
+
+  file { $auditd::plugin_dir:
+    ensure => directory,
+    owner  => $auditd::plugin_dir_owner,
+    group  => $auditd::plugin_dir_group,
+    mode   => $auditd::plugin_dir_mode,
+  }
+
+  file { $auditd::rules_dir:
+    ensure => directory,
+    owner  => $auditd::rules_dir_owner,
+    group  => $auditd::rules_dir_group,
+    mode   => $auditd::rules_dir_mode,
   }
 
   concat { $auditd::rules_file:
-    mode   => '0600',
-    owner  => 0,
-    group  => 0,
+    owner  => $auditd::rules_file_owner,
+    group  => $auditd::rules_file_group,
+    mode   => $auditd::rules_file_mode,
     notify => Service['auditd'],
   }
 
@@ -42,31 +50,14 @@ class auditd::config {
     order   => '99',
   }
 
-  file { '/etc/audit/auditd.conf':
+  file { $auditd::config_path:
     ensure  => file,
-    mode    => '0600',
-    owner   => 0,
-    group   => 0,
+    owner   => $auditd::config_owner,
+    group   => $auditd::config_group,
+    mode    => $auditd::config_mode,
     content => epp('auditd/auditd.conf.epp', {
       config => $auditd::config,
     }),
     notify  => Service['auditd'],
-  }
-
-  file { '/etc/audisp/plugins.d/syslog.conf':
-    ensure  => file,
-    content => epp('auditd/audisp_syslog_plugin.conf.epp', {
-      syslog_output => $auditd::syslog_output,
-    }),
-    mode    => '0640',
-    owner   => 0,
-    group   => 0,
-    require => File['/etc/audisp/plugins.d/'],
-  }
-
-  file { '/sbin/audispd':
-    mode  => '0750',
-    owner => 0,
-    group => 0,
   }
 }

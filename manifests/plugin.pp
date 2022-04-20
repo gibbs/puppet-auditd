@@ -27,13 +27,17 @@ define auditd::plugin (
   Enum['builtin', 'always'] $type = 'always',
   Optional[String] $args = undef,
   Enum['binary', 'string'] $format = 'string',
+  Stdlib::Filemode $mode = '0600',
+  Variant[String, Integer] $owner = 0,
+  Variant[String, Integer] $group = 0,
 ) {
+
   file { "auditd-plugin-${name}.conf":
     ensure  => file,
     path    => "${auditd::plugin_dir}/${name}.conf",
-    mode    => '0600',
-    owner   => 0,
-    group   => 0,
+    mode    => $mode,
+    owner   => $auditd::plugin_dir_owner,
+    group   => $auditd::plugin_dir_group,
     content => epp('auditd/plugin.conf.epp', {
       active    => $active,
       direction => $direction,

@@ -7,5 +7,8 @@ type Auditd::Plugins = Struct[
     Optional['type']      => Enum['builtin', 'always'],
     Optional['args']      => String,
     Optional['format']    => Enum['binary', 'string'],
+    Optional['mode']      => Stdlib::Filemode,
+    Optional['owner']     => Variant[String, Integer],
+    Optional['group']     => Variant[String, Integer],
   }
 ]

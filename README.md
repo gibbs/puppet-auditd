@@ -16,10 +16,8 @@ provided.
 Including `auditd` and using the defaults will;
 
 - Install the audit daemon package
-- Configure and manage both `/etc/audit/auditd.conf` and
-`/etc/audisp/plugins.d/syslog.conf`
+- Configure and manage `/etc/audit/auditd.conf`
 - Manage `/etc/audit/rules.d/audit.rules`
-- Manage the file permissions of `/sbin/audispd`
 - Enable and manage the `auditd` service
 
 ```puppet
