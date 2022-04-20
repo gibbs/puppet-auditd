@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-# rubocop:disable Layout/FirstHashElementIndentation
 describe 'auditd::plugin', type: :define do
   context 'supported operating systems' do
     on_supported_os.each do |os, facts|
@@ -9,7 +8,7 @@ describe 'auditd::plugin', type: :define do
         let(:pre_condition) { 'include ::auditd' }
 
         context 'clickhouse plugin example' do
-          let(:title ) { 'clickhouse' }
+          let(:title) { 'clickhouse' }
           let(:params) do
             {
               active: 'yes',
