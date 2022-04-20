@@ -5,9 +5,11 @@
 class auditd::service {
   assert_private()
 
-  service { $auditd::service_name:
-    ensure     => $auditd::service_ensure,
-    enable     => $auditd::service_enable,
-    hasrestart => false,
+  if $auditd::service_manage {
+    service { $auditd::service_name:
+      ensure     => $auditd::service_ensure,
+      enable     => $auditd::service_enable,
+      hasrestart => false,
+    }
   }
 }

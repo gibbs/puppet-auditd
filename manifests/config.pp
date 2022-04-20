@@ -35,19 +35,19 @@ class auditd::config {
 
   concat::fragment { 'auditd_rules_begin':
     target  => $auditd::rules_file,
+    order   => '01',
     content => epp('auditd/audit-rules-begin.fragment.epp', {
       buffer_size  => $auditd::buffer_size,
       failure_mode => $auditd::failure_mode,
     }),
-    order   => '01',
   }
 
   concat::fragment { 'auditd_rules_end':
     target  => $auditd::rules_file,
+    order   => '99',
     content => epp('auditd/audit-rules-end.fragment.epp', {
       immutable => $auditd::immutable,
     }),
-    order   => '99',
   }
 
   file { $auditd::config_path:

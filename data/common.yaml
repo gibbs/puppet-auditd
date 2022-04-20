@@ -1,7 +1,12 @@
 ---
+# Package
 auditd::package_ensure: installed
+auditd::package_manage: true
+
+# Service
 auditd::service_enable: true
 auditd::service_ensure: running
+auditd::service_manage: true
 
 # Root audit directory
 auditd::path: /etc/audit

@@ -21,15 +21,6 @@
 # @param group
 #   The auditd configuration directory group
 #
-# @param service_enable
-#   The service enable state
-#
-# @param service_name
-#   The service name to use
-#
-# @param service_ensure
-#   The service ensure state
-#
 # @param config
 #   auditd.conf configuration hash
 #
@@ -50,6 +41,21 @@
 #
 # @param package_ensure
 #   The package state to set
+#
+# @param package_manage
+#   If the auditd package should be managed
+#
+# @param service_enable
+#   The service enable state
+#
+# @param service_name
+#   The service name to use
+#
+# @param service_ensure
+#   The service ensure state
+#
+# @param service_manage
+#   If the auditd service should be managed
 #
 # @param plugin_dir
 #   The plugin directory path to manage
@@ -103,9 +109,6 @@ class auditd (
   Stdlib::Filemode $mode                           = '0750',
   Variant[String[1], Integer] $owner               = 0,
   Variant[String[1], Integer] $group               = 0,
-  Boolean $service_enable                          = true,
-  String[1] $service_name                          = 'auditd',
-  Stdlib::Ensure::Service $service_ensure          = 'running',
   Auditd::Conf $config                             = {},
   Stdlib::Absolutepath $config_path                = '/etc/audit/auditd.conf',
   Stdlib::Filemode $config_mode                    = '0600',
@@ -113,6 +116,11 @@ class auditd (
   Variant[String[1], Integer] $config_group        = 0,
   String[1] $package_name                          = 'auditd',
   String $package_ensure                           = 'installed',
+  Boolean $package_manage                          = true,
+  Boolean $service_enable                          = true,
+  String[1] $service_name                          = 'auditd',
+  Stdlib::Ensure::Service $service_ensure          = 'running',
+  Boolean $service_manage                          = true,
   Stdlib::Absolutepath $plugin_dir                 = '/etc/audit/plugins.d',
   Stdlib::Filemode $plugin_dir_mode                = '0750',
   Variant[String[1], Integer] $plugin_dir_owner    = 0,
