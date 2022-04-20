@@ -18,11 +18,13 @@
 
 ### Defined types
 
+* [`auditd::plugin`](#auditdplugin): Create plugin files
 * [`auditd::rule`](#auditdrule): Creates auditd rules
 
 ### Data types
 
 * [`Auditd::Conf`](#auditdconf): auditd.conf configuration file parameters
+* [`Auditd::Plugins`](#auditdplugins): auditd plugin parameters
 * [`Auditd::Rules`](#auditdrules): auditd rule parameters
 
 ## Classes
@@ -35,74 +37,39 @@ audit daemon
 
 The following parameters are available in the `auditd` class:
 
-* [`package_name`](#package_name)
-* [`package_ensure`](#package_ensure)
-* [`service_enable`](#service_enable)
-* [`service_name`](#service_name)
-* [`rules`](#rules)
-* [`rules_file`](#rules_file)
-* [`config`](#config)
 * [`buffer_size`](#buffer_size)
 * [`failure_mode`](#failure_mode)
 * [`immutable`](#immutable)
-* [`syslog_output`](#syslog_output)
+* [`dir`](#dir)
+* [`mode`](#mode)
+* [`owner`](#owner)
+* [`group`](#group)
+* [`config`](#config)
+* [`config_path`](#config_path)
+* [`config_mode`](#config_mode)
+* [`config_owner`](#config_owner)
+* [`config_group`](#config_group)
+* [`package_name`](#package_name)
+* [`package_ensure`](#package_ensure)
+* [`package_manage`](#package_manage)
+* [`service_enable`](#service_enable)
+* [`service_name`](#service_name)
 * [`service_ensure`](#service_ensure)
-
-##### <a name="package_name"></a>`package_name`
-
-Data type: `String[1]`
-
-The package name to use
-
-Default value: `'auditd'`
-
-##### <a name="package_ensure"></a>`package_ensure`
-
-Data type: `String`
-
-The package state to set
-
-Default value: `'installed'`
-
-##### <a name="service_enable"></a>`service_enable`
-
-Data type: `Boolean`
-
-The service enable state
-
-Default value: ``true``
-
-##### <a name="service_name"></a>`service_name`
-
-Data type: `String[1]`
-
-The service name to use
-
-Default value: `'auditd'`
-
-##### <a name="rules"></a>`rules`
-
-Data type: `Optional[Hash[String, Auditd::Rules]]`
-
-Hash of auditd rules to set
-
-Default value: `{}`
-
-##### <a name="rules_file"></a>`rules_file`
-
-Data type: `Stdlib::Absolutepath`
-
-The rules file to use
-
-Default value: `'/etc/audit/rules.d/audit.rules'`
-
-##### <a name="config"></a>`config`
-
-Data type: `Auditd::Conf`
-
-auditd.conf configuration hash
-
-Default value: `{}`
+* [`service_manage`](#service_manage)
+* [`plugin_dir`](#plugin_dir)
+* [`plugin_dir_mode`](#plugin_dir_mode)
+* [`plugin_dir_owner`](#plugin_dir_owner)
+* [`plugin_dir_group`](#plugin_dir_group)
+* [`plugins`](#plugins)
+* [`rules_dir`](#rules_dir)
+* [`rules_dir_mode`](#rules_dir_mode)
+* [`rules_dir_owner`](#rules_dir_owner)
+* [`rules_dir_group`](#rules_dir_group)
+* [`rules_file`](#rules_file)
+* [`rules_file_mode`](#rules_file_mode)
+* [`rules_file_owner`](#rules_file_owner)
+* [`rules_file_group`](#rules_file_group)
+* [`rules`](#rules)
 
 ##### <a name="buffer_size"></a>`buffer_size`
 
@@ -124,27 +91,339 @@ Default value: `1`
 
 Data type: `Boolean`
 
-Make the configuration immutable
+Set if the configuration should be immutable
 
 Default value: ``false``
 
-##### <a name="syslog_output"></a>`syslog_output`
+##### <a name="dir"></a>`dir`
+
+Data type: `Stdlib::Absolutepath`
+
+The auditd configuration directory path (e.g. /etc/audit)
+
+Default value: `'/etc/audit'`
+
+##### <a name="mode"></a>`mode`
+
+Data type: `Stdlib::Filemode`
+
+The auditd configuration directory mode
+
+Default value: `'0750'`
+
+##### <a name="owner"></a>`owner`
+
+Data type: `Variant[String[1], Integer]`
+
+The auditd configuration directory owner
+
+Default value: `0`
+
+##### <a name="group"></a>`group`
+
+Data type: `Variant[String[1], Integer]`
+
+The auditd configuration directory group
+
+Default value: `0`
+
+##### <a name="config"></a>`config`
+
+Data type: `Auditd::Conf`
+
+auditd.conf configuration hash
+
+Default value: `{}`
+
+##### <a name="config_path"></a>`config_path`
+
+Data type: `Stdlib::Absolutepath`
+
+auditd.conf configuration filepath (e.g. /etc/audit/auditd.conf)
+
+Default value: `'/etc/audit/auditd.conf'`
+
+##### <a name="config_mode"></a>`config_mode`
+
+Data type: `Stdlib::Filemode`
+
+The configurtion file mode
+
+Default value: `'0600'`
+
+##### <a name="config_owner"></a>`config_owner`
+
+Data type: `Variant[String[1], Integer]`
+
+The configurtion file mode owner
+
+Default value: `0`
+
+##### <a name="config_group"></a>`config_group`
+
+Data type: `Variant[String[1], Integer]`
+
+The configurtion file mode group
+
+Default value: `0`
+
+##### <a name="package_name"></a>`package_name`
+
+Data type: `String[1]`
+
+The package name to use
+
+Default value: `'auditd'`
+
+##### <a name="package_ensure"></a>`package_ensure`
+
+Data type: `String`
+
+The package state to set
+
+Default value: `'installed'`
+
+##### <a name="package_manage"></a>`package_manage`
 
 Data type: `Boolean`
 
-Enable syslog output
+If the auditd package should be managed
 
 Default value: ``true``
+
+##### <a name="service_enable"></a>`service_enable`
+
+Data type: `Boolean`
+
+The service enable state
+
+Default value: ``true``
+
+##### <a name="service_name"></a>`service_name`
+
+Data type: `String[1]`
+
+The service name to use
+
+Default value: `'auditd'`
 
 ##### <a name="service_ensure"></a>`service_ensure`
 
 Data type: `Stdlib::Ensure::Service`
 
-
+The service ensure state
 
 Default value: `'running'`
 
+##### <a name="service_manage"></a>`service_manage`
+
+Data type: `Boolean`
+
+If the auditd service should be managed
+
+Default value: ``true``
+
+##### <a name="plugin_dir"></a>`plugin_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+The plugin directory path to manage
+
+Default value: `'/etc/audit/plugins.d'`
+
+##### <a name="plugin_dir_mode"></a>`plugin_dir_mode`
+
+Data type: `Stdlib::Filemode`
+
+The plugin directory mode
+
+Default value: `'0750'`
+
+##### <a name="plugin_dir_owner"></a>`plugin_dir_owner`
+
+Data type: `Variant[String[1], Integer]`
+
+The plugin directory owner
+
+Default value: `0`
+
+##### <a name="plugin_dir_group"></a>`plugin_dir_group`
+
+Data type: `Variant[String[1], Integer]`
+
+The plugin directory group
+
+Default value: `0`
+
+##### <a name="plugins"></a>`plugins`
+
+Data type: `Optional[Hash[String, Auditd::Plugins]]`
+
+Hash of auditd plugin configuration files to create
+
+Default value: `{}`
+
+##### <a name="rules_dir"></a>`rules_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+The rules directory path to manage
+
+Default value: `'/etc/audit/rules.d'`
+
+##### <a name="rules_dir_mode"></a>`rules_dir_mode`
+
+Data type: `Stdlib::Filemode`
+
+The rules directory mode
+
+Default value: `'0750'`
+
+##### <a name="rules_dir_owner"></a>`rules_dir_owner`
+
+Data type: `Variant[String[1], Integer]`
+
+The rules directory owner
+
+Default value: `0`
+
+##### <a name="rules_dir_group"></a>`rules_dir_group`
+
+Data type: `Variant[String[1], Integer]`
+
+The rules directory group
+
+Default value: `0`
+
+##### <a name="rules_file"></a>`rules_file`
+
+Data type: `Stdlib::Absolutepath`
+
+The rules filepath
+
+Default value: `'/etc/audit/rules.d/audit.rules'`
+
+##### <a name="rules_file_mode"></a>`rules_file_mode`
+
+Data type: `Stdlib::Filemode`
+
+The rules file mode
+
+Default value: `'0600'`
+
+##### <a name="rules_file_owner"></a>`rules_file_owner`
+
+Data type: `Variant[String[1], Integer]`
+
+The rules file owner
+
+Default value: `0`
+
+##### <a name="rules_file_group"></a>`rules_file_group`
+
+Data type: `Variant[String[1], Integer]`
+
+The rules file group
+
+Default value: `0`
+
+##### <a name="rules"></a>`rules`
+
+Data type: `Optional[Hash[String, Auditd::Rules]]`
+
+Hash of auditd rules to set
+
+Default value: `{}`
+
 ## Defined types
+
+### <a name="auditdplugin"></a>`auditd::plugin`
+
+Create plugin files
+
+#### Parameters
+
+The following parameters are available in the `auditd::plugin` defined type:
+
+* [`active`](#active)
+* [`direction`](#direction)
+* [`path`](#path)
+* [`type`](#type)
+* [`args`](#args)
+* [`format`](#format)
+* [`mode`](#mode)
+* [`owner`](#owner)
+* [`group`](#group)
+
+##### <a name="active"></a>`active`
+
+Data type: `Enum['yes', 'no']`
+
+Set the plugin active state.
+
+Default value: `'yes'`
+
+##### <a name="direction"></a>`direction`
+
+Data type: `Enum['in', 'out']`
+
+Give a clue to the event dispatcher about which direction events flow.
+
+Default value: `'out'`
+
+##### <a name="path"></a>`path`
+
+Data type: `Stdlib::Absolutepath`
+
+The absolute path to the plugin executable.
+
+##### <a name="type"></a>`type`
+
+Data type: `Enum['builtin', 'always']`
+
+Tells the dispatcher how the plugin wants to be run.
+
+Default value: `'always'`
+
+##### <a name="args"></a>`args`
+
+Data type: `Optional[String]`
+
+Pass arguments to the child program.
+
+Default value: ``undef``
+
+##### <a name="format"></a>`format`
+
+Data type: `Enum['binary', 'string']`
+
+Binary or string dispatcher options.
+
+Default value: `'string'`
+
+##### <a name="mode"></a>`mode`
+
+Data type: `Stdlib::Filemode`
+
+
+
+Default value: `'0600'`
+
+##### <a name="owner"></a>`owner`
+
+Data type: `Variant[String, Integer]`
+
+
+
+Default value: `0`
+
+##### <a name="group"></a>`group`
+
+Data type: `Variant[String, Integer]`
+
+
+
+Default value: `0`
 
 ### <a name="auditdrule"></a>`auditd::rule`
 
@@ -186,83 +465,26 @@ Struct[{
     Optional['local_events']            => Enum['yes', 'no'],
     Optional['log_file']                => Stdlib::Absolutepath,
     Optional['write_logs']              => Enum['yes', 'no'],
-    Optional['log_format']              => Enum[
-      'raw', 'RAW',
-      'enriched', 'ENRICHED',
-    ],
+    Optional['log_format']              => Enum['raw', 'RAW', 'enriched', 'ENRICHED'],
     Optional['log_group']               => Variant[Integer, String[1]],
     Optional['priority_boost']          => Integer[0],
-    Optional['flush']                   => Enum[
-      'none', 'NONE',
-      'incremental', 'INCREMENTAL',
-      'incremental_async', 'INCREMENTAL_ASYNC',
-      'data', 'DATA',
-      'sync', 'SYNC',
-    ],
+    Optional['flush']                   => Enum['none', 'NONE', 'incremental', 'INCREMENTAL', 'incremental_async', 'INCREMENTAL_ASYNC', 'data', 'DATA', 'sync', 'SYNC'],
     Optional['freq']                    => Integer[0],
     Optional['dispatcher']              => String,
-    Optional['disp_qos']                => Enum[
-      'lossy', 'LOSSY',
-      'lossless', 'LOSSLESS'
-    ],
+    Optional['disp_qos']                => Enum['lossy', 'LOSSY', 'lossless', 'LOSSLESS'],
     Optional['num_logs']                => Integer[0, 999],
-    Optional['name_format']             => Enum[
-      'none', 'NONE',
-      'hostname', 'HOSTNAME',
-      'fqd', 'FQD',
-      'numeric', 'NUMERIC',
-      'user', 'USER',
-    ],
+    Optional['name_format']             => Enum['none', 'NONE', 'hostname', 'HOSTNAME', 'fqd', 'FQD', 'numeric', 'NUMERIC', 'user', 'USER'],
     Optional['name']                    => String,
     Optional['max_log_file']            => Integer,
-    Optional['max_log_file_action']     => Enum[
-      'ignore', 'IGNORE',
-      'syslog', 'SYSLOG',
-      'suspend', 'SUSPEND',
-      'rotate', 'ROTATE',
-      'keep_logs', 'KEEP_LOGS',
-    ],
+    Optional['max_log_file_action']     => Enum['ignore', 'IGNORE', 'syslog', 'SYSLOG', 'suspend', 'SUSPEND', 'rotate', 'ROTATE', 'keep_logs', 'KEEP_LOGS'],
     Optional['verify_email']            => Enum['yes', 'no'],
     Optional['action_mail_acct']        => Variant[String, Stdlib::Email],
     Optional['space_left']              => Integer,
-    Optional['space_left_action']       => Enum[
-      'ignore', 'IGNORE',
-      'syslog', 'SYSLOG',
-      'rotate', 'ROTATE',
-      'email', 'EMAIL',
-      'exec', 'EXEC',
-      'suspend', 'SUSPEND',
-      'single', 'SINGLE',
-      'halt', 'HALT',
-    ],
+    Optional['space_left_action']       => Enum['ignore', 'IGNORE', 'syslog', 'SYSLOG', 'rotate', 'ROTATE', 'email', 'EMAIL', 'exec', 'EXEC', 'suspend', 'SUSPEND', 'single', 'SINGLE', 'halt', 'HALT'],
     Optional['admin_space_left']        => Variant[Integer, String],
-    Optional['admin_space_left_action'] => Enum[
-      'ignore', 'IGNORE',
-      'syslog', 'SYSLOG',
-      'rotate', 'ROTATE',
-      'email', 'EMAIL',
-      'exec', 'EXEC',
-      'suspend', 'SUSPEND',
-      'single', 'SINGLE',
-      'halt', 'HALT',
-    ],
-    Optional['disk_full_action']        => Enum[
-      'ignore', 'IGNORE',
-      'syslog', 'SYSLOG',
-      'rotate', 'ROTATE',
-      'exec', 'EXEC',
-      'suspend', 'SUSPEND',
-      'single', 'SINGLE',
-      'halt', 'HALT',
-    ],
-    Optional['disk_error_action']       => Enum[
-      'ignore', 'IGNORE',
-      'syslog', 'SYSLOG',
-      'exec', 'EXEC',
-      'suspend', 'SUSPEND',
-      'single', 'SINGLE',
-      'halt', 'HALT',
-    ],
+    Optional['admin_space_left_action'] => Enum['ignore', 'IGNORE', 'syslog', 'SYSLOG', 'rotate', 'ROTATE', 'email', 'EMAIL', 'exec', 'EXEC', 'suspend', 'SUSPEND', 'single', 'SINGLE', 'halt', 'HALT'],
+    Optional['disk_full_action']        => Enum['ignore', 'IGNORE', 'syslog', 'SYSLOG', 'rotate', 'ROTATE', 'exec', 'EXEC', 'suspend', 'SUSPEND', 'single', 'SINGLE', 'halt', 'HALT'],
+    Optional['disk_error_action']       => Enum['ignore', 'IGNORE', 'syslog', 'SYSLOG', 'exec', 'EXEC', 'suspend', 'SUSPEND', 'single', 'SINGLE', 'halt', 'HALT'],
     Optional['tcp_listen_port']         => Integer[1,65535],
     Optional['tcp_listen_queue']        => Integer,
     Optional['tcp_max_per_addr']        => Integer[1,1024],
@@ -275,16 +497,30 @@ Struct[{
     Optional['krb5_key_file']           => Stdlib::Absolutepath,
     Optional['distribute_network']      => Enum['yes', 'no'],
     Optional['q_depth']                 => Integer,
-    Optional['overflow_action']         => Enum[
-      'ignore', 'IGNORE',
-      'syslog', 'SYSLOG',
-      'suspend', 'SUSPEND',
-      'single', 'SINGLE',
-      'halt', 'HALT',
-    ],
+    Optional['overflow_action']         => Enum['ignore', 'IGNORE', 'syslog', 'SYSLOG', 'suspend', 'SUSPEND', 'single', 'SINGLE', 'halt', 'HALT'],
     Optional['max_restarts']            => Integer[0],
     Optional['plugin_dir']              => Stdlib::Absolutepath,
     Optional['end_of_event_timeout']    => Integer[0],
+  }]
+```
+
+### <a name="auditdplugins"></a>`Auditd::Plugins`
+
+auditd plugin parameters
+
+Alias of
+
+```puppet
+Struct[{
+    Optional['active']    => Enum['yes', 'no'],
+    Optional['direction'] => Enum['in', 'out'],
+    'path'                => Stdlib::Absolutepath,
+    Optional['type']      => Enum['builtin', 'always'],
+    Optional['args']      => String,
+    Optional['format']    => Enum['binary', 'string'],
+    Optional['mode']      => Stdlib::Filemode,
+    Optional['owner']     => Variant[String, Integer],
+    Optional['group']     => Variant[String, Integer],
   }]
 ```
 
