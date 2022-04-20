@@ -5,6 +5,19 @@
 class auditd::config {
   assert_private()
 
+  file {[
+    '/etc/audit/',
+    '/etc/audisp/',
+    '/etc/audisp/plugins.d/',
+    $auditd::plugin_dir,
+    $auditd::rules_dir,
+  ]:
+    ensure => directory,
+    mode   => '0750',
+    owner  => 0,
+    group  => 0,
+  }
+
   concat { $auditd::rules_file:
     mode   => '0600',
     owner  => 0,
@@ -38,16 +51,6 @@ class auditd::config {
       config => $auditd::config,
     }),
     notify  => Service['auditd'],
-  }
-
-  file {[
-    '/etc/audisp/',
-    '/etc/audisp/plugins.d/',
-  ]:
-    ensure => directory,
-    mode   => '0750',
-    owner  => 0,
-    group  => 0,
   }
 
   file { '/etc/audisp/plugins.d/syslog.conf':

@@ -11,7 +11,7 @@ provided.
 
 ## Usage
 
-### Defaults
+### Default Behaviour
 
 Including `auditd` and using the defaults will;
 
@@ -73,4 +73,44 @@ auditd::rules:
   sudoers_changes:
     content: -w /etc/sudoers -p wa -k scope
     order: 50
+```
+
+## Plugins
+
+The `auditd::plugin` define is used to create and manage auditd plugin files.
+
+```puppet
+auditd::plugin { 'clickhouse':
+  active    => 'yes',
+  direction => 'out',
+  path      => '/usr/libexec/auditd-plugin-clickhouse',
+  type      => 'always',
+  args      => '/etc/audit/auditd-clickhouse.conf',
+  format    => 'string',
+}
+```
+
+A hash can also be passed to the main `auditd` with the `plugins` parameter:
+
+```puppet
+class { 'auditd':
+  plugins => {
+    auoms => {
+      active    => 'no',
+      direction => 'out',
+      path      => '/opt/microsoft/auoms/bin/auomscollect',
+    },
+  },
+}
+```
+
+With Hiera:
+
+```yaml
+auditd::plugins:
+  clickhouse:
+    active: 'yes'
+    direction: 'out'
+    path: /usr/libexec/auditd-plugin-clickhouse
+    args: /etc/audit/auditd-clickhouse.conf
 ```

@@ -27,6 +27,10 @@ describe 'auditd' do
           it { is_expected.to contain_package('audit') }
         end
 
+        it { is_expected.to contain_file('/etc/audit/').with_ensure('directory') }
+        it { is_expected.to contain_file('/etc/audit/plugins.d/').with_ensure('directory') }
+        it { is_expected.to contain_file('/etc/audit/rules.d/').with_ensure('directory') }
+
         it { is_expected.to contain_file('/etc/audit/auditd.conf') }
         it { is_expected.to contain_concat('/etc/audit/rules.d/audit.rules') }
         it { is_expected.to contain_concat__fragment('auditd_rules_begin') }
@@ -46,6 +50,19 @@ describe 'auditd' do
                 sudoers_changes: {
                   content: '-w /etc/sudoers -p wa -k scope',
                   order:   50,
+                },
+              },
+              plugins: {
+                auoms: {
+                  active: 'no',
+                  direction: 'out',
+                  path: '/opt/microsoft/auoms/bin/auomscollect',
+                },
+                clickhouse: {
+                  active: 'yes',
+                  direction: 'out',
+                  path: '/usr/libexec/auditd-plugin-clickhouse',
+                  args: '/etc/audit/auditd-clickhouse.conf',
                 },
               },
             }

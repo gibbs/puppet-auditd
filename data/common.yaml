@@ -3,7 +3,11 @@ auditd::package_ensure: installed
 auditd::service_enable: true
 auditd::service_ensure: running
 
+# Plugins
+auditd::plugin_dir: /etc/audit/plugins.d
+
 # Rules
+auditd::rules_dir: /etc/audit/rules.d
 auditd::rules_file: /etc/audit/rules.d/audit.rules
 auditd::buffer_size: 8192
 auditd::failure_mode: 1
