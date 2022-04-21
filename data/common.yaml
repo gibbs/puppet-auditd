@@ -1,4 +1,41 @@
 ---
+# Daemon configuration
+auditd::config:
+  local_events: 'yes'
+  log_file: /var/log/auditd.log
+  write_logs: 'yes'
+  log_format: raw
+  log_group: root
+  priority_boost: 4
+  flush: incremental
+  freq: 20
+  num_logs: 4
+  name_format: none
+  max_log_file: 25
+  max_log_file_action: rotate
+  verify_email: 'no'
+  action_mail_acct: root
+  space_left: 75
+  space_left_action: email
+  admin_space_left: 50
+  admin_space_left_action: email
+  disk_full_action: syslog
+  disk_error_action: syslog
+  tcp_listen_queue: 5
+  tcp_client_max_idle: 0
+  enable_krb5: 'no'
+  krb5_principal: auditd
+  distribute_network: 'no'
+
+# Dispatcher configuration
+auditd::audisp::config:
+  q_depth: 250
+  overflow_action: syslog
+  priority_boost: 4
+  max_restarts: 10
+  name_format: hostname
+  plugin_dir: /etc/audisp/plugins.d/
+
 # Package
 auditd::package_ensure: installed
 auditd::package_manage: true
@@ -7,6 +44,10 @@ auditd::package_manage: true
 auditd::service_enable: true
 auditd::service_ensure: running
 auditd::service_manage: true
+auditd::service_override: |-
+  [Unit]
+  RefuseManualStart=no
+  RefuseManualStop=no
 
 # Root audit directory
 auditd::path: /etc/audit
@@ -43,30 +84,19 @@ auditd::config_mode: '0600'
 auditd::config_owner: 0
 auditd::config_group: 0
 
-# Daemon configuration
-auditd::config:
-  local_events: 'yes'
-  log_file: /var/log/auditd.log
-  write_logs: 'yes'
-  log_format: raw
-  log_group: root
-  priority_boost: 4
-  flush: incremental
-  freq: 20
-  num_logs: 4
-  name_format: none
-  max_log_file: 25
-  max_log_file_action: rotate
-  verify_email: 'no'
-  action_mail_acct: root
-  space_left: 75
-  space_left_action: email
-  admin_space_left: 50
-  admin_space_left_action: email
-  disk_full_action: rotate
-  disk_error_action: syslog
-  tcp_listen_queue: 5
-  tcp_client_max_idle: 0
-  enable_krb5: 'no'
-  krb5_principal: auditd
-  distribute_network: 'no'
+# Audit Dispatcher
+auditd::audisp::dir: /etc/audisp
+auditd::audisp::mode: '0750'
+auditd::audisp::owner: 0
+auditd::audisp::group: 0
+auditd::audisp::config_path: /etc/audisp/audispd.conf
+auditd::audisp::config_mode: '0600'
+auditd::audisp::config_owner: 0
+auditd::audisp::config_group: 0
+auditd::audisp::package_name: audispd-plugins
+auditd::audisp::package_ensure: installed
+auditd::audisp::package_manage: true
+auditd::audisp::plugin_dir: /etc/audisp/plugins.d
+auditd::audisp::plugin_dir_mode: '0750'
+auditd::audisp::plugin_dir_owner: 0
+auditd::audisp::plugin_dir_group: 0

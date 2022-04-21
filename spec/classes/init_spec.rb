@@ -2,9 +2,14 @@ require 'spec_helper'
 
 describe 'auditd' do
   context 'supported operating systems' do
+    audit_v2 = ['CentOS7', 'Debian10', 'RedHat7', 'Scientific7', 'Ubuntu20.04', 'Ubuntu18.04']
+    audit_v3 = ['AlmaLinux8', 'Debian11', 'RedHat8', 'Rocky8', 'Ubuntu22.04']
+
     on_supported_os.each do |os, facts|
       context "on #{os}" do
         let(:facts) { facts }
+
+        test_os = [facts[:os]['name'], facts[:os]['release']['major']].join('')
 
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to create_class('auditd') }
@@ -35,6 +40,14 @@ describe 'auditd' do
         it { is_expected.to contain_concat('/etc/audit/rules.d/audit.rules') }
         it { is_expected.to contain_concat__fragment('auditd_rules_begin') }
         it { is_expected.to contain_concat__fragment('auditd_rules_end') }
+
+        if audit_v2.include?(test_os)
+          it { is_expected.not_to contain_file('auditd-auditd-plugin-syslog.conf') }
+        end
+
+        if audit_v3.include?(test_os)
+          it { is_expected.to contain_file('auditd-auditd-plugin-syslog.conf') }
+        end
 
         context 'documentation example' do
           let(:params) do

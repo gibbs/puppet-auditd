@@ -20,24 +20,42 @@
 # @param format
 #   Binary or string dispatcher options.
 #
+# @param plugin_type
+#   The plugin type
+#
+# @param mode
+#   The file mode to apply
+#
+# @param owner
+#   The file owner to set
+#
+# @param group
+#   The file group to set
+#
 define auditd::plugin (
+  Variant[Stdlib::Absolutepath, String] $path,
   Enum['yes', 'no'] $active = 'yes',
   Enum['in', 'out'] $direction = 'out',
-  Stdlib::Absolutepath $path,
   Enum['builtin', 'always'] $type = 'always',
   Optional[String] $args = undef,
   Enum['binary', 'string'] $format = 'string',
+  Enum['auditd', 'audisp'] $plugin_type = 'auditd',
   Stdlib::Filemode $mode = '0600',
   Variant[String, Integer] $owner = 0,
   Variant[String, Integer] $group = 0,
 ) {
 
-  file { "auditd-plugin-${name}.conf":
+  $plugin_path = ($plugin_type == 'audisp') ? {
+    true    => $auditd::audisp::plugin_dir,
+    default => $auditd::plugin_dir,
+  }
+
+  file { "auditd-${plugin_type}-plugin-${name}.conf":
     ensure  => file,
-    path    => "${auditd::plugin_dir}/${name}.conf",
+    path    => "${plugin_path}/${name}.conf",
     mode    => $mode,
-    owner   => $auditd::plugin_dir_owner,
-    group   => $auditd::plugin_dir_group,
+    owner   => $owner,
+    group   => $group,
     content => epp('auditd/plugin.conf.epp', {
       active    => $active,
       direction => $direction,

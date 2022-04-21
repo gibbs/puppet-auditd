@@ -57,6 +57,9 @@
 # @param service_manage
 #   If the auditd service should be managed
 #
+# @param service_override
+#   auditd service override content
+#
 # @param plugin_dir
 #   The plugin directory path to manage
 #
@@ -121,6 +124,7 @@ class auditd (
   String[1] $service_name                          = 'auditd',
   Stdlib::Ensure::Service $service_ensure          = 'running',
   Boolean $service_manage                          = true,
+  Optional[String] $service_override               = undef,
   Stdlib::Absolutepath $plugin_dir                 = '/etc/audit/plugins.d',
   Stdlib::Filemode $plugin_dir_mode                = '0750',
   Variant[String[1], Integer] $plugin_dir_owner    = 0,
