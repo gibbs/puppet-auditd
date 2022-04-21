@@ -26,3 +26,46 @@ auditd::config:
   enable_krb5: 'no'
   krb5_principal: auditd
   distribute_network: 'no'
+
+auditd::audisp::config:
+  q_depth: 250
+  overflow_action: syslog
+  priority_boost: 4
+  max_restarts: 10
+  name_format: hostname
+  plugin_dir: /etc/audisp/plugins.d/
+
+auditd::audisp::plugins:
+  af_unix:
+    active: 'no'
+    direction: out
+    path: builtin_af_unix
+    type: builtin
+    args: 0640 /var/run/audispd_events
+    format: string
+  au-prelude:
+    active: 'no'
+    direction: out
+    path: /sbin/audisp-prelude
+    type: always
+    format: string
+  au-remote:
+    active: 'no'
+    direction: out
+    path: /sbin/audisp-remote
+    type: always
+    format: string
+  audispd-zos-remote:
+    active: 'no'
+    direction: out
+    path: /sbin/audispd-zos-remote
+    type: always
+    args: /etc/audisp/zos-remote.conf
+    format: string
+  syslog:
+    active: 'no'
+    direction: out
+    path: builtin_syslog
+    type: builtin
+    args: LOG_INFO
+    format: string

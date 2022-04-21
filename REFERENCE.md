@@ -9,6 +9,7 @@
 #### Public Classes
 
 * [`auditd`](#auditd): audit daemon
+* [`auditd::audisp`](#auditdaudisp): audit event dispatcher
 
 #### Private Classes
 
@@ -23,6 +24,7 @@
 
 ### Data types
 
+* [`Auditd::Audisp::Conf`](#auditdaudispconf): audispd.conf configuration file parameters
 * [`Auditd::Conf`](#auditdconf): auditd.conf configuration file parameters
 * [`Auditd::Plugins`](#auditdplugins): auditd plugin parameters
 * [`Auditd::Rules`](#auditdrules): auditd rule parameters
@@ -56,6 +58,7 @@ The following parameters are available in the `auditd` class:
 * [`service_name`](#service_name)
 * [`service_ensure`](#service_ensure)
 * [`service_manage`](#service_manage)
+* [`service_override`](#service_override)
 * [`plugin_dir`](#plugin_dir)
 * [`plugin_dir_mode`](#plugin_dir_mode)
 * [`plugin_dir_owner`](#plugin_dir_owner)
@@ -223,6 +226,14 @@ If the auditd service should be managed
 
 Default value: ``true``
 
+##### <a name="service_override"></a>`service_override`
+
+Data type: `Optional[String]`
+
+auditd service override content
+
+Default value: ``undef``
+
 ##### <a name="plugin_dir"></a>`plugin_dir`
 
 Data type: `Stdlib::Absolutepath`
@@ -335,6 +346,168 @@ Hash of auditd rules to set
 
 Default value: `{}`
 
+### <a name="auditdaudisp"></a>`auditd::audisp`
+
+audit event dispatcher
+
+#### Parameters
+
+The following parameters are available in the `auditd::audisp` class:
+
+* [`dir`](#dir)
+* [`mode`](#mode)
+* [`owner`](#owner)
+* [`group`](#group)
+* [`config`](#config)
+* [`config_path`](#config_path)
+* [`config_mode`](#config_mode)
+* [`config_owner`](#config_owner)
+* [`config_group`](#config_group)
+* [`package_name`](#package_name)
+* [`package_ensure`](#package_ensure)
+* [`package_manage`](#package_manage)
+* [`plugin_dir`](#plugin_dir)
+* [`plugin_dir_mode`](#plugin_dir_mode)
+* [`plugin_dir_owner`](#plugin_dir_owner)
+* [`plugin_dir_group`](#plugin_dir_group)
+* [`plugins`](#plugins)
+
+##### <a name="dir"></a>`dir`
+
+Data type: `Stdlib::Absolutepath`
+
+The auditd configuration directory path
+
+Default value: `'/etc/audisp'`
+
+##### <a name="mode"></a>`mode`
+
+Data type: `Stdlib::Filemode`
+
+The auditd configuration directory mode
+
+Default value: `'0750'`
+
+##### <a name="owner"></a>`owner`
+
+Data type: `Variant[String[1], Integer]`
+
+The auditd configuration directory owner
+
+Default value: `0`
+
+##### <a name="group"></a>`group`
+
+Data type: `Variant[String[1], Integer]`
+
+The auditd configuration directory group
+
+Default value: `0`
+
+##### <a name="config"></a>`config`
+
+Data type: `Auditd::Audisp::Conf`
+
+audispd.conf configuration hash
+
+Default value: `{}`
+
+##### <a name="config_path"></a>`config_path`
+
+Data type: `Stdlib::Absolutepath`
+
+audispd.conf file path
+
+Default value: `'/etc/audisp/audispd.conf'`
+
+##### <a name="config_mode"></a>`config_mode`
+
+Data type: `Stdlib::Filemode`
+
+audispd.conf file mode
+
+Default value: `'0600'`
+
+##### <a name="config_owner"></a>`config_owner`
+
+Data type: `Variant[String[1], Integer]`
+
+audispd.conf file owner
+
+Default value: `0`
+
+##### <a name="config_group"></a>`config_group`
+
+Data type: `Variant[String[1], Integer]`
+
+audispd.conf file group
+
+Default value: `0`
+
+##### <a name="package_name"></a>`package_name`
+
+Data type: `String[1]`
+
+The audisp plugins package name
+
+Default value: `'audispd-plugins'`
+
+##### <a name="package_ensure"></a>`package_ensure`
+
+Data type: `String`
+
+The package state to set
+
+Default value: `'installed'`
+
+##### <a name="package_manage"></a>`package_manage`
+
+Data type: `Boolean`
+
+If the audisp plugin package should be managed
+
+Default value: ``true``
+
+##### <a name="plugin_dir"></a>`plugin_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+The plugin directory path to manage
+
+Default value: `'/etc/audisp/plugins.d'`
+
+##### <a name="plugin_dir_mode"></a>`plugin_dir_mode`
+
+Data type: `Stdlib::Filemode`
+
+The plugin directory mode
+
+Default value: `'0750'`
+
+##### <a name="plugin_dir_owner"></a>`plugin_dir_owner`
+
+Data type: `Variant[String[1], Integer]`
+
+The plugin directory owner
+
+Default value: `0`
+
+##### <a name="plugin_dir_group"></a>`plugin_dir_group`
+
+Data type: `Variant[String[1], Integer]`
+
+The plugin directory group
+
+Default value: `0`
+
+##### <a name="plugins"></a>`plugins`
+
+Data type: `Optional[Hash[String, Auditd::Plugins]]`
+
+Hash of audisp plugin configuration files to create
+
+Default value: `{}`
+
 ## Defined types
 
 ### <a name="auditdplugin"></a>`auditd::plugin`
@@ -351,6 +524,7 @@ The following parameters are available in the `auditd::plugin` defined type:
 * [`type`](#type)
 * [`args`](#args)
 * [`format`](#format)
+* [`plugin_type`](#plugin_type)
 * [`mode`](#mode)
 * [`owner`](#owner)
 * [`group`](#group)
@@ -373,7 +547,7 @@ Default value: `'out'`
 
 ##### <a name="path"></a>`path`
 
-Data type: `Stdlib::Absolutepath`
+Data type: `Variant[Stdlib::Absolutepath, String]`
 
 The absolute path to the plugin executable.
 
@@ -401,11 +575,19 @@ Binary or string dispatcher options.
 
 Default value: `'string'`
 
+##### <a name="plugin_type"></a>`plugin_type`
+
+Data type: `Enum['auditd', 'audisp']`
+
+The plugin type
+
+Default value: `'auditd'`
+
 ##### <a name="mode"></a>`mode`
 
 Data type: `Stdlib::Filemode`
 
-
+The file mode to apply
 
 Default value: `'0600'`
 
@@ -413,7 +595,7 @@ Default value: `'0600'`
 
 Data type: `Variant[String, Integer]`
 
-
+The file owner to set
 
 Default value: `0`
 
@@ -421,7 +603,7 @@ Default value: `0`
 
 Data type: `Variant[String, Integer]`
 
-
+The file group to set
 
 Default value: `0`
 
@@ -453,6 +635,24 @@ The rule priority order (between 1 and 100)
 Default value: `10`
 
 ## Data types
+
+### <a name="auditdaudispconf"></a>`Auditd::Audisp::Conf`
+
+audispd.conf configuration file parameters
+
+Alias of
+
+```puppet
+Struct[{
+    Optional['q_depth']         => Integer,
+    Optional['overflow_action'] => Enum['ignore', 'IGNORE', 'syslog', 'SYSLOG', 'suspend', 'SUSPEND', 'single', 'SINGLE', 'halt', 'HALT'],
+    Optional['priority_boost']  => Integer[0],
+    Optional['max_restarts']    => Integer[0],
+    Optional['name_format']     => Enum['none', 'NONE', 'hostname', 'HOSTNAME', 'fqd', 'FQD', 'numeric', 'NUMERIC', 'user', 'USER'],
+    Optional['name']            => String,
+    Optional['plugin_dir']      => Stdlib::Absolutepath,
+  }]
+```
 
 ### <a name="auditdconf"></a>`Auditd::Conf`
 
@@ -512,15 +712,16 @@ Alias of
 
 ```puppet
 Struct[{
-    Optional['active']    => Enum['yes', 'no'],
-    Optional['direction'] => Enum['in', 'out'],
-    'path'                => Stdlib::Absolutepath,
-    Optional['type']      => Enum['builtin', 'always'],
-    Optional['args']      => String,
-    Optional['format']    => Enum['binary', 'string'],
-    Optional['mode']      => Stdlib::Filemode,
-    Optional['owner']     => Variant[String, Integer],
-    Optional['group']     => Variant[String, Integer],
+    Optional['active']      => Enum['yes', 'no'],
+    Optional['direction']   => Enum['in', 'out'],
+    'path'                  => Variant[Stdlib::Absolutepath, String],
+    Optional['type']        => Enum['builtin', 'always'],
+    Optional['args']        => String,
+    Optional['format']      => Enum['binary', 'string'],
+    Optional['plugin_type'] => Enum['auditd', 'audisp'],
+    Optional['mode']        => Stdlib::Filemode,
+    Optional['owner']       => Variant[String, Integer],
+    Optional['group']       => Variant[String, Integer],
   }]
 ```
 

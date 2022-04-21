@@ -22,7 +22,7 @@ describe 'auditd::plugin', type: :define do
 
           it { is_expected.to compile }
           it {
-            is_expected.to contain_file('auditd-plugin-clickhouse.conf').with(
+            is_expected.to contain_file('auditd-auditd-plugin-clickhouse.conf').with(
               'ensure' => 'file',
               'path'   => '/etc/audit/plugins.d/clickhouse.conf',
               'owner'  => 0,

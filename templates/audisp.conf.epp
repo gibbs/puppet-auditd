@@ -1,0 +1,7 @@
+<%- | Auditd::Audisp::Conf $config,
+| -%>
+# THIS FILE IS MANAGED BY PUPPET
+
+<% $config.each |$key, $value| { -%>
+<%= $key %> = <%= $value %>
+<% } -%>

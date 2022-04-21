@@ -4,3 +4,7 @@ auditd::config:
   disp_qos: lossy
   dispatcher: /sbin/audispd
   log_group: adm
+
+auditd::audisp::dir: /etc/audisp
+auditd::audisp::config_path: /etc/audisp/audispd.conf
+auditd::audisp::plugin_dir: /etc/audisp/plugins.d

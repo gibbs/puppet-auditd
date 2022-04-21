@@ -6,17 +6,26 @@
 
 ## Overview
 
-This module installs, configures and manages auditd. No default rules are
-provided.
+This module installs, configures and manages the Linux Audit daemon (auditd)
+and optionally the dispatcher (audisp) for older auditd versions.
+
+No default rules are provided. See the Reference file for all options.
+
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Rules](#rules)
+- [Plugins](#plugins)
+- [Dispatcher](#dispatcher)
+- [Limitations](#limitations)
 
 ## Usage
-
-### Default Behaviour
 
 Including `auditd` and using the defaults will;
 
 - Install the audit daemon package
-- Configure and manage `/etc/audit/auditd.conf`
+- Configure and manage `/etc/audit/auditd.conf` with most default settings
+- Replace all `suspend/halt` settings with `rotate/syslog` to prevent unexpected
+availability issues
 - Manage `/etc/audit/rules.d/audit.rules`
 - Enable and manage the `auditd` service
 
@@ -24,14 +33,14 @@ Including `auditd` and using the defaults will;
 include auditd
 ```
 
-### Config
+## Configuration
 
 The `auditd::config` parameter is used to configure the `auditd.conf` file:
 
 - By default actions use `rotate/syslog` instead of `suspend/halt`
 - Key names are based on documented settings in `man auditd.conf`
 
-### Rules
+## Rules
 
 The `auditd::rule` define is used to create and manage auditd rules.
 
@@ -44,7 +53,7 @@ auditd::rule { 'insmod':
 auditd::rule { '-w /var/run/utmp -p wa -k session': }
 ```
 
-A hash can also be passed to the main `auditd` with the `rules` parameter:
+A hash can also be passed to the main `auditd` class with the `rules` parameter:
 
 ```puppet
 class { 'auditd':
@@ -112,3 +121,64 @@ auditd::plugins:
     path: /usr/libexec/auditd-plugin-clickhouse
     args: /etc/audit/auditd-clickhouse.conf
 ```
+
+## Dispatcher
+
+The `auditd::audisp` class can be used to manage the dispatcher *for version 2*.
+Using this class on more recent auditd versions (v3) is not necessary and is
+equivalent to:
+
+```puppet
+package { 'audispd-plugins':
+  ensure => 'installed',
+}
+```
+
+In v3 `audisp` settings can be part of `auditd::config`. For v2 use
+`auditd::audisp`:
+
+```puppet
+class { 'auditd::audisp':
+  config => {
+    q_depth     => 250,
+    name_format => 'hostname',
+  },
+}
+```
+
+```yaml
+auditd::audisp::config:
+  q_depth: 250
+  overflow_action: syslog
+  priority_boost: 4
+  max_restarts: 10
+  name_format: hostname
+  plugin_dir: /etc/audisp/plugins.d/
+```
+
+### audisp plugins
+
+The `auditd::plugin` define can be used to be manage audisp plugins by setting
+`plugin_type` to `audisp`:
+
+```puppet
+auditd::plugin { 'syslog':
+  active      => 'yes',
+  direction   => 'out',
+  path        => '/sbin/audisp-syslog',
+  type        => 'always',
+  args        => 'LOG_INFO',
+  format      => 'string',
+  plugin_type => 'audisp',
+}
+```
+
+## Limitations
+
+The `RefuseManualStop` systemd unit option has been set to `no` to allow for
+easier upgrades and management. See [auditd.service and RefuseManualStop](https://lists.freedesktop.org/archives/systemd-devel/2014-April/018608.html)
+for a discussion on this subject.
+
+Configuration files distributed via `audispd-plugins` are not currently managed.
+
+This package has been tested primarily on Debian family distributions.
