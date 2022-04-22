@@ -1,7 +1,36 @@
 ---
+appveyor.yml:
+  delete: true
+.gitignore:
+  paths:
+    - /[Bb]ackup*/
+    - /.devcontainer/
+    - /.gitlab-ci.yml
+    - /.travis.yml
+    - /.vscode/
+    - /appveyor.yml
+.gitlab-ci.yml:
+  delete: true
+.travis.yml:
+  delete: true
+.devcontainer:
+  delete: true
+.vscode:
+  delete: true
+.pdkignore:
+  paths:
+    - /[Bb]ackup*/
+    - /provision.yaml
 Gemfile:
+  unmanaged: true
   optional:
     ':development':
       - gem: 'github_changelog_generator'
         version: '~> 1.15'
         condition: "Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.3.0')"
+spec/spec_helper.rb:
+  coverage_report: true
+  spec_overrides:
+    - 'RSpec.configure do |c|'
+    - '  c.facter_implementation = :rspec'
+    - 'end'
