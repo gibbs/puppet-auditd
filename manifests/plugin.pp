@@ -34,17 +34,16 @@
 #
 define auditd::plugin (
   Variant[Stdlib::Absolutepath, String] $path,
-  Enum['yes', 'no'] $active = 'yes',
-  Enum['in', 'out'] $direction = 'out',
-  Enum['builtin', 'always'] $type = 'always',
-  Optional[String] $args = undef,
-  Enum['binary', 'string'] $format = 'string',
+  Enum['yes', 'no'] $active             = 'yes',
+  Enum['in', 'out'] $direction          = 'out',
+  Enum['builtin', 'always'] $type       = 'always',
+  Optional[String] $args                = undef,
+  Enum['binary', 'string'] $format      = 'string',
   Enum['auditd', 'audisp'] $plugin_type = 'auditd',
-  Stdlib::Filemode $mode = '0600',
-  Variant[String, Integer] $owner = 0,
-  Variant[String, Integer] $group = 0,
+  Stdlib::Filemode $mode                = '0600',
+  Variant[String, Integer] $owner       = 0,
+  Variant[String, Integer] $group       = 0,
 ) {
-
   $plugin_path = ($plugin_type == 'audisp') ? {
     true    => $auditd::audisp::plugin_dir,
     default => $auditd::plugin_dir,

@@ -129,7 +129,7 @@ class auditd (
   Stdlib::Filemode $plugin_dir_mode                = '0750',
   Variant[String[1], Integer] $plugin_dir_owner    = 0,
   Variant[String[1], Integer] $plugin_dir_group    = 0,
-  Optional[Hash[String, Auditd::Plugins]] $plugins = {},
+  Hash[String, Auditd::Plugins] $plugins           = {},
   Stdlib::Absolutepath $rules_dir                  = '/etc/audit/rules.d',
   Stdlib::Filemode $rules_dir_mode                 = '0750',
   Variant[String[1], Integer] $rules_dir_owner     = 0,
@@ -138,9 +138,8 @@ class auditd (
   Stdlib::Filemode $rules_file_mode                = '0600',
   Variant[String[1], Integer] $rules_file_owner    = 0,
   Variant[String[1], Integer] $rules_file_group    = 0,
-  Optional[Hash[String, Auditd::Rules]] $rules     = {},
+  Hash[String, Auditd::Rules] $rules               = {},
 ) {
-
   contain auditd::package
   contain auditd::config
   contain auditd::service
