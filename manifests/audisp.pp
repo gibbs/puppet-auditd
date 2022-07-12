@@ -70,9 +70,8 @@ class auditd::audisp (
   Stdlib::Filemode $plugin_dir_mode                = '0750',
   Variant[String[1], Integer] $plugin_dir_owner    = 0,
   Variant[String[1], Integer] $plugin_dir_group    = 0,
-  Optional[Hash[String, Auditd::Plugins]] $plugins = {},
+  Hash[String, Auditd::Plugins] $plugins           = {},
 ) inherits auditd {
-
   if $package_manage {
     package { $package_name:
       ensure => $package_ensure,

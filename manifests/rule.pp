@@ -12,8 +12,7 @@ define auditd::rule (
   String $content        = '',
   Integer[1, 100] $order = 10,
 ) {
-
-  $rule_content = ($content == '') ? {
+  $rule_content = ($content == undef or $content == '') ? {
     true    => sprintf("%s\n\n", $name),
     default => sprintf("# %s\n%s\n\n", $name, $content),
   }
