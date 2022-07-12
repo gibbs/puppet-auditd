@@ -5,6 +5,8 @@
   "summary": "Install, configure, and manage the audit daemon",
   "license": "Apache-2.0",
   "source": "https://github.com/gibbs/puppet-auditd",
+  "project_page": "https://github.com/gibbs/puppet-auditd",
+  "issues_url": "https://github.com/gibbs/puppet-auditd/issues",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
