@@ -36,6 +36,9 @@ Gemfile:
         require: false
       - gem: 'puppet-lint-optional_default-check'
         require: false
+    ':test':
+      - gem: 'puppet_metadata'
+        version: '~> 1.0'
 spec/spec_helper.rb:
   coverage_report: true
   spec_overrides:
