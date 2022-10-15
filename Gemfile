@@ -24,18 +24,12 @@ group :development do
   gem "puppet-module-posix-dev-r#{minor_version}", '~> 1.0',     require: false, platforms: [:ruby]
   gem "puppet-module-win-default-r#{minor_version}", '~> 1.0',   require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "puppet-module-win-dev-r#{minor_version}", '~> 1.0',       require: false, platforms: [:mswin, :mingw, :x64_mingw]
+  gem "voxpupuli-puppet-lint-plugins", '>= 3.0',                 require: false
   gem "github_changelog_generator", '~> 1.15',                   require: false if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.3.0')
-  gem "puppet-lint-file_ensure-check",                           require: false
-  gem "puppet-lint-manifest_whitespace-check",                   require: false
-  gem "puppet-lint-trailing_comma-check",                        require: false
-  gem "puppet-lint-optional_default-check",                      require: false
 end
 group :system_tests do
   gem "puppet-module-posix-system-r#{minor_version}", '~> 1.0', require: false, platforms: [:ruby]
   gem "puppet-module-win-system-r#{minor_version}", '~> 1.0',   require: false, platforms: [:mswin, :mingw, :x64_mingw]
-end
-group :test do
-  gem "puppet_metadata", '~> 1.0', require: false
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']

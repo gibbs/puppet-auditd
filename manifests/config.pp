@@ -37,8 +37,8 @@ class auditd::config {
     target  => $auditd::rules_file,
     order   => '01',
     content => epp('auditd/audit-rules-begin.fragment.epp', {
-      buffer_size  => $auditd::buffer_size,
-      failure_mode => $auditd::failure_mode,
+        buffer_size  => $auditd::buffer_size,
+        failure_mode => $auditd::failure_mode,
     }),
   }
 
@@ -46,7 +46,7 @@ class auditd::config {
     target  => $auditd::rules_file,
     order   => '99',
     content => epp('auditd/audit-rules-end.fragment.epp', {
-      immutable => $auditd::immutable,
+        immutable => $auditd::immutable,
     }),
   }
 
@@ -56,7 +56,7 @@ class auditd::config {
     group   => $auditd::config_group,
     mode    => $auditd::config_mode,
     content => epp('auditd/auditd.conf.epp', {
-      config => $auditd::config,
+        config => $auditd::config,
     }),
     notify  => Service['auditd'],
   }
