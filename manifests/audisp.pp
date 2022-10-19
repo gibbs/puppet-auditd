@@ -103,7 +103,7 @@ class auditd::audisp (
       group   => $config_group,
       mode    => $config_mode,
       content => epp('auditd/audisp.conf.epp', {
-        config => $config,
+          config => $config,
       }),
     }
   }

@@ -56,12 +56,12 @@ define auditd::plugin (
     owner   => $owner,
     group   => $group,
     content => epp('auditd/plugin.conf.epp', {
-      active    => $active,
-      direction => $direction,
-      path      => $path,
-      type      => $type,
-      args      => $args,
-      format    => $format,
+        active    => $active,
+        direction => $direction,
+        path      => $path,
+        type      => $type,
+        args      => $args,
+        format    => $format,
     }),
     notify  => Service['auditd'],
   }
