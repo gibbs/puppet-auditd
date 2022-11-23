@@ -79,6 +79,32 @@ describe 'auditd' do
           end
 
           it { is_expected.to compile }
+          it { is_expected.to contain_auditd__plugin('auoms') }
+          it { is_expected.to contain_file('auditd-auditd-plugin-auoms.conf') }
+
+        end
+
+        context 'with service_override set to valid value' do
+          let(:params) { { service_override: 'testing' } }
+
+          it {
+            is_expected.to contain_file('/etc/systemd/system/auditd.service.d').only_with(
+              'ensure' => 'directory',
+              'owner'  => 0,
+              'group'  => 0,
+              'mode'   => '0750',
+            )
+          }
+
+          it {
+            is_expected.to contain_file('/etc/systemd/system/auditd.service.d/override.conf').only_with(
+              'ensure'  => 'file',
+              'owner'   => 0,
+              'group'   => 0,
+              'mode'    => '0640',
+              'content' => 'testing',
+            )
+          }
         end
       end
     end
