@@ -81,7 +81,6 @@ describe 'auditd' do
           it { is_expected.to compile }
           it { is_expected.to contain_auditd__plugin('auoms') }
           it { is_expected.to contain_file('auditd-auditd-plugin-auoms.conf') }
-
         end
 
         context 'with service_override set to valid value' do
