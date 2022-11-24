@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v1.0.2](https://github.com/gibbs/puppet-auditd/tree/v1.0.2) (2022-11-24)
+
+[Full Changelog](https://github.com/gibbs/puppet-auditd/compare/v1.0.1...v1.0.2)
+
+### Added
+
+- Add Ubuntu 22.04 to metadata [\#10](https://github.com/gibbs/puppet-auditd/pull/10) ([Phil-Friderici](https://github.com/Phil-Friderici))
+
+### Fixed
+
+- Raise resource coverage to 100% [\#9](https://github.com/gibbs/puppet-auditd/pull/9) ([Phil-Friderici](https://github.com/Phil-Friderici))
+- update pdk + pdk templates [\#8](https://github.com/gibbs/puppet-auditd/pull/8) ([TheMeier](https://github.com/TheMeier))
+
+## [v1.0.1](https://github.com/gibbs/puppet-auditd/tree/v1.0.1) (2022-07-12)
+
+[Full Changelog](https://github.com/gibbs/puppet-auditd/compare/v1.0.0...v1.0.1)
+
 ## [v1.0.0](https://github.com/gibbs/puppet-auditd/tree/v1.0.0) (2022-07-12)
 
 [Full Changelog](https://github.com/gibbs/puppet-auditd/compare/v0.9.0...v1.0.0)
