@@ -49,6 +49,11 @@ define auditd::plugin (
     default => $auditd::plugin_dir,
   }
 
+  $notify_service = $auditd::service_manage ? {
+    true    => Service[$auditd::service_name],
+    default => undef,
+  }
+
   file { "auditd-${plugin_type}-plugin-${name}.conf":
     ensure  => file,
     path    => "${plugin_path}/${name}.conf",
@@ -63,6 +68,6 @@ define auditd::plugin (
         args      => $args,
         format    => $format,
     }),
-    notify  => Service['auditd'],
+    notify  => $notify_service,
   }
 }

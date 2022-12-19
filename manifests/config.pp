@@ -5,6 +5,11 @@
 class auditd::config {
   assert_private()
 
+  $notify_service = $auditd::service_manage ? {
+    true    => Service[$auditd::service_name],
+    default => undef,
+  }
+
   file { $auditd::dir:
     ensure => directory,
     owner  => $auditd::owner,
@@ -30,7 +35,7 @@ class auditd::config {
     owner  => $auditd::rules_file_owner,
     group  => $auditd::rules_file_group,
     mode   => $auditd::rules_file_mode,
-    notify => Service['auditd'],
+    notify => $notify_service,
   }
 
   concat::fragment { 'auditd_rules_begin':
@@ -58,6 +63,6 @@ class auditd::config {
     content => epp('auditd/auditd.conf.epp', {
         config => $auditd::config,
     }),
-    notify  => Service['auditd'],
+    notify  => $notify_service,
   }
 }
