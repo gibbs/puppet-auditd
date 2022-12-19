@@ -32,7 +32,7 @@ group :system_tests do
   gem "puppet-module-win-system-r#{minor_version}", '~> 1.0',   require: false, platforms: [:mswin, :mingw, :x64_mingw]
 end
 group :test do
-  gem "puppet_metadata", '~> 1.0', require: false
+  gem "puppet_metadata", '~> 1.9.0', require: false
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']
