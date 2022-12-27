@@ -32,7 +32,7 @@ Gemfile:
         condition: "Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.3.0')"
     ':test':
       - gem: 'puppet_metadata'
-        version: '~> 1.0'
+        version: '~> 1.9.0'
 spec/spec_helper.rb:
   coverage_report: true
   spec_overrides:
