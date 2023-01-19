@@ -215,19 +215,18 @@ describe 'auditd' do
           it { is_expected.to contain_service('auditd').with_ensure('stopped') }
         end
 
-        # TODO: This functionality is not working and needs fixing
-        # If the service is not managed these resources will fail
-        # auditd::config - concat { $auditd::rules_file }
-        # auditd::config - file { $auditd::config_path }
-        # auditd::plugin - file { "auditd-${plugin_type}-plugin-${name}.conf"}
-        # because the notify parameter can not find the service['auditd'] anymore.
-        #
-        # context 'with service_manage set to valid value' do
-        #   let(:params) { { service_manage: false } }
-        #
-        #   it { is_expected.not_to contain_service('audit') }  # RedHat
-        #   it { is_expected.not_to contain_service('auditd') } # others
-        # end
+        context 'with service_manage set to valid value' do
+          let(:params) { { service_manage: false } }
+
+          it { is_expected.not_to contain_service('audit') }  # RedHat
+          it { is_expected.not_to contain_service('auditd') } # others
+        end
+
+        context 'with service_name set to valid value' do
+          let(:params) { { service_name: 'audit4' } }
+
+          it { is_expected.to contain_service('audit4') }
+        end
 
         context 'with service_override set to valid value' do
           let(:params) { { service_override: 'testing' } }
