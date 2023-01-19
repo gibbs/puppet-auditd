@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v1.0.3](https://github.com/gibbs/puppet-auditd/tree/v1.0.3) (2023-01-19)
+
+[Full Changelog](https://github.com/gibbs/puppet-auditd/compare/v1.0.2...v1.0.3)
+
+### Added
+
+- Update to PDK 2.6.0 [\#14](https://github.com/gibbs/puppet-auditd/pull/14) ([Phil-Friderici](https://github.com/Phil-Friderici))
+- Update actions and dependencies using deprecated node version [\#12](https://github.com/gibbs/puppet-auditd/pull/12) ([gibbs](https://github.com/gibbs))
+- Stricter unit tests [\#11](https://github.com/gibbs/puppet-auditd/pull/11) ([Phil-Friderici](https://github.com/Phil-Friderici))
+
+### Fixed
+
+- Fix: Remove hardcoded service\_name and conditionally notify service [\#13](https://github.com/gibbs/puppet-auditd/pull/13) ([gibbs](https://github.com/gibbs))
+
 ## [v1.0.2](https://github.com/gibbs/puppet-auditd/tree/v1.0.2) (2022-11-24)
 
 [Full Changelog](https://github.com/gibbs/puppet-auditd/compare/v1.0.1...v1.0.2)
