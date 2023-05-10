@@ -628,9 +628,9 @@ Default value: `''`
 
 ##### <a name="order"></a>`order`
 
-Data type: `Integer[1, 100]`
+Data type: `Integer[1, 1000]`
 
-The rule priority order (between 1 and 100)
+The rule priority order (between 1 and 1000)
 
 Default value: `10`
 
@@ -734,7 +734,7 @@ Alias of
 ```puppet
 Struct[{
     Optional['content'] => String,
-    Optional['order']   => Integer[1, 99],
+    Optional['order']   => Integer[1, 999],
   }]
 ```
 
