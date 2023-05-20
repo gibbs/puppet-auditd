@@ -49,7 +49,7 @@ class auditd::config {
 
   concat::fragment { 'auditd_rules_end':
     target  => $auditd::rules_file,
-    order   => '99',
+    order   => '999',
     content => epp('auditd/audit-rules-end.fragment.epp', {
         immutable => $auditd::immutable,
     }),

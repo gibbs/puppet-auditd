@@ -6,11 +6,11 @@
 #   The rule content
 #
 # @param order
-#   The rule priority order (between 1 and 100)
+#   The rule priority order (between 1 and 1000)
 #
 define auditd::rule (
   Optional[String] $content = undef,
-  Integer[1, 100]  $order = 10,
+  Integer[1, 1000] $order = 10,
 ) {
   $rule_content = ($content == undef or $content == '') ? {
     true    => sprintf("%s\n\n", $name),
