@@ -33,6 +33,7 @@ Gemfile:
     ':test':
       - gem: 'puppet_metadata'
         version: '~> 1.9.0'
+      - gem: 'puppet-blacksmith'
 spec/spec_helper.rb:
   coverage_report: true
   spec_overrides:

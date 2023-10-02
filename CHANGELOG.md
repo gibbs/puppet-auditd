@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v1.0.4](https://github.com/gibbs/puppet-auditd/tree/v1.0.4) (2023-10-02)
+
+[Full Changelog](https://github.com/gibbs/puppet-auditd/compare/v1.0.3...v1.0.4)
+
+### Added
+
+- chore: update pdk version 3.0.0 [\#19](https://github.com/gibbs/puppet-auditd/pull/19) ([TheMeier](https://github.com/TheMeier))
+- Extend range of order parameter to 1000 [\#16](https://github.com/gibbs/puppet-auditd/pull/16) ([imp-](https://github.com/imp-))
+
+### Fixed
+
+- Update to PDK 2.6.1 [\#15](https://github.com/gibbs/puppet-auditd/pull/15) ([Phil-Friderici](https://github.com/Phil-Friderici))
+
 ## [v1.0.3](https://github.com/gibbs/puppet-auditd/tree/v1.0.3) (2023-01-19)
 
 [Full Changelog](https://github.com/gibbs/puppet-auditd/compare/v1.0.2...v1.0.3)

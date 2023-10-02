@@ -44,6 +44,7 @@ group :system_tests do
 end
 group :test do
   gem "puppet_metadata", '~> 1.9.0', require: false
+  gem "puppet-blacksmith",           require: false
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']
