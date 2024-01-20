@@ -75,3 +75,4 @@ end
 RSpec.configure do |c|
   c.facter_implementation = :rspec
 end
+require 'puppet_blacksmith/rake_tasks' if Gem.loaded_specs.key? 'puppet-blacksmith'
