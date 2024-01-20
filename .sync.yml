@@ -34,6 +34,16 @@ Gemfile:
       - gem: 'puppet_metadata'
         version: '~> 2.0'
       - gem: 'puppet-blacksmith'
+      - gem: 'ed25519'
+        version:
+          - '>= 1.2'
+          - '< 2.0'
+        require: false
+      - gem: 'bcrypt_pbkdf'
+        version:
+          - '>= 1.0'
+          - '< 2.0'
+        require: false
 Rakefile:
   requires:
       - require: puppet_blacksmith/rake_tasks
