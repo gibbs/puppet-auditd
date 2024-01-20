@@ -42,6 +42,10 @@ group :system_tests do
   gem "puppet_litmus", '~> 1.0', require: false, platforms: [:ruby, :x64_mingw]
   gem "serverspec", '~> 2.41',   require: false
 end
+group :release_prep do
+  gem "puppet-strings", '~> 4.0',         require: false
+  gem "puppetlabs_spec_helper", '~> 6.0', require: false
+end
 group :test do
   gem "puppet_metadata", '~> 2.0', require: false
   gem "puppet-blacksmith",         require: false

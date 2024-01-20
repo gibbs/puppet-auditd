@@ -34,6 +34,10 @@ Gemfile:
       - gem: 'puppet_metadata'
         version: '~> 2.0'
       - gem: 'puppet-blacksmith'
+Rakefile:
+  requires:
+      - require: puppet_blacksmith/rake_tasks
+        conditional: "Gem.loaded_specs.key? 'puppet-blacksmith'"
 spec/spec_helper.rb:
   coverage_report: true
   spec_overrides:
