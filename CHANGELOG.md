@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v2.0.0](https://github.com/gibbs/puppet-auditd/tree/v2.0.0) (2024-01-21)
+
+[Full Changelog](https://github.com/gibbs/puppet-auditd/compare/v1.0.4...v2.0.0)
+
+### Added
+
+- Add Debian 12 support [\#23](https://github.com/gibbs/puppet-auditd/pull/23) ([TheMeier](https://github.com/TheMeier))
+- Add Puppet 8 support. Drop near EOL versions. [\#22](https://github.com/gibbs/puppet-auditd/pull/22) ([gibbs](https://github.com/gibbs))
+
 ## [v1.0.4](https://github.com/gibbs/puppet-auditd/tree/v1.0.4) (2023-10-02)
 
 [Full Changelog](https://github.com/gibbs/puppet-auditd/compare/v1.0.3...v1.0.4)
@@ -10,9 +19,6 @@ All notable changes to this project will be documented in this file. The format 
 
 - chore: update pdk version 3.0.0 [\#19](https://github.com/gibbs/puppet-auditd/pull/19) ([TheMeier](https://github.com/TheMeier))
 - Extend range of order parameter to 1000 [\#16](https://github.com/gibbs/puppet-auditd/pull/16) ([imp-](https://github.com/imp-))
-
-### Fixed
-
 - Update to PDK 2.6.1 [\#15](https://github.com/gibbs/puppet-auditd/pull/15) ([Phil-Friderici](https://github.com/Phil-Friderici))
 
 ## [v1.0.3](https://github.com/gibbs/puppet-auditd/tree/v1.0.3) (2023-01-19)
