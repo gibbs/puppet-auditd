@@ -5,5 +5,6 @@ default:
     - 'litmusimage/almalinux:8'
     - 'litmusimage/debian:11'
     - 'litmusimage/rockylinux:8'
+    - 'litmusimage/ubuntu:24.04'
     - 'litmusimage/ubuntu:22.04'
     - 'litmusimage/ubuntu:20.04'
