@@ -18,7 +18,7 @@ class auditd::service {
         ensure  => file,
         owner   => 0,
         group   => 0,
-        mode    => '0640',
+        mode    => '0644',
         content => $auditd::service_override,
       }
     }
