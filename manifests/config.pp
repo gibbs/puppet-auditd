@@ -32,6 +32,7 @@ class auditd::config {
   }
 
   concat { $auditd::rules_file:
+    order  => 'numeric',
     owner  => $auditd::rules_file_owner,
     group  => $auditd::rules_file_group,
     mode   => $auditd::rules_file_mode,
@@ -40,7 +41,7 @@ class auditd::config {
 
   concat::fragment { 'auditd_rules_begin':
     target  => $auditd::rules_file,
-    order   => '01',
+    order   => 0,
     content => epp('auditd/audit-rules-begin.fragment.epp', {
         buffer_size  => $auditd::buffer_size,
         failure_mode => $auditd::failure_mode,
@@ -49,7 +50,7 @@ class auditd::config {
 
   concat::fragment { 'auditd_rules_end':
     target  => $auditd::rules_file,
-    order   => '999',
+    order   => 1000,
     content => epp('auditd/audit-rules-end.fragment.epp', {
         immutable => $auditd::immutable,
     }),
