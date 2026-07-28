@@ -76,38 +76,29 @@ jobs:
       - name: Provision Testing Environments
         run: bundle exec rake 'litmus:provision_list[default]'
 
-      - name: Debug SSH auth on provisioned containers
+      - name: Work around PAM/sshd rejecting valid root logins on EL images
         run: |
-          sudo apt-get update -y >/dev/null && sudo apt-get install -y sshpass >/dev/null
-
+          # On some litmusimage EL (RHEL-family) builds, sshd's PAM password
+          # path (via the unix_chkpwd helper) gets EACCES reading /etc/shadow
+          # even as root, seemingly due to OpenSSH's preauth seccomp sandbox.
+          # UsePAM no bypasses PAM/unix_chkpwd entirely in favour of sshd's own
+          # built-in password check, which isn't affected. Fine for disposable
+          # test containers; not something we'd do on a real host.
           for cid in $(docker ps -q); do
             image=$(docker inspect --format '{{.Config.Image}}' "$cid")
-            echo "::group::${cid} (${image})"
-            echo "--- sshd -T (effective config, after all Includes) ---"
-            docker exec "$cid" sshd -T 2>&1 | grep -Ei '^(permitrootlogin|passwordauthentication|usepam|challengeresponseauthentication) ' || true
-            echo "--- root shadow entry ---"
-            docker exec "$cid" grep '^root:' /etc/shadow || true
-            echo "--- sshd service status ---"
-            docker exec "$cid" systemctl status sshd --no-pager 2>&1 || docker exec "$cid" service ssh status 2>&1 || true
-            echo "::endgroup::"
+            echo "Patching UsePAM no on ${cid} (${image})"
+            docker exec "$cid" sed -ri 's/^#?UsePAM .*/UsePAM no/' /etc/ssh/sshd_config
+            case "$image" in
+              *debian*|*ubuntu*)
+                docker exec "$cid" systemctl restart ssh
+                ;;
+              *)
+                docker exec "$cid" pkill -f '^/usr/sbin/sshd$' || true
+                sleep 1
+                docker exec "$cid" /usr/sbin/sshd
+                ;;
+            esac
           done
-
-          ruby -ryaml <<'RUBY_EOF'
-            data = YAML.load_file("spec/fixtures/litmus_inventory.yaml")
-            data["groups"][0]["targets"].each do |t|
-              port = t["config"]["ssh"]["port"]
-              platform = t["facts"]["platform"]
-              cid = t["facts"]["container_id"]
-              puts "::group::ssh -vvv port #{port} (#{platform})"
-              system("sshpass -p root ssh -vvv -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 -p #{port} root@localhost true")
-              puts "::endgroup::"
-              puts "::group::journal (pam/sshd) for #{cid} (#{platform})"
-              # OpenSSH >= 9.8 (e.g. EL9) splits per-connection handling into a separate
-              # sshd-session process, so both comms need to be matched (combined via "+").
-              system("docker exec #{cid} journalctl --no-pager -q -n 100 _COMM=sshd + _COMM=sshd-session 2>&1")
-              puts "::endgroup::"
-            end
-          RUBY_EOF
 
       - name: Install Puppet Agent
         run: bundle exec rake 'litmus:install_agent'
@@ -119,13 +110,6 @@ jobs:
 
       - name: Run Tests
         run: bundle exec rake 'litmus:acceptance:parallel'
-
-      - name: Debug via tmate on failure
-        if: failure()
-        uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: true
-        timeout-minutes: 30
 
       - name: Tear Down
         run: bundle exec rake 'litmus:tear_down'
