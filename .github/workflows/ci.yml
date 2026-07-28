@@ -97,8 +97,14 @@ jobs:
             data["groups"][0]["targets"].each do |t|
               port = t["config"]["ssh"]["port"]
               platform = t["facts"]["platform"]
+              cid = t["facts"]["container_id"]
               puts "::group::ssh -vvv port #{port} (#{platform})"
               system("sshpass -p root ssh -vvv -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 -p #{port} root@localhost true")
+              puts "::endgroup::"
+              puts "::group::journal (pam/sshd) for #{cid} (#{platform})"
+              # OpenSSH >= 9.8 (e.g. EL9) splits per-connection handling into a separate
+              # sshd-session process, so both comms need to be matched (OR'd via "+").
+              system("docker exec #{cid} journalctl --no-pager -q -n 100 _COMM=sshd + _COMM=sshd-session 2>&1")
               puts "::endgroup::"
             end
           '
