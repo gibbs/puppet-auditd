@@ -74,11 +74,43 @@ jobs:
           bundler-cache: true
 
       - name: Provision Testing Environments
+        run: bundle exec rake 'litmus:provision_list[default]'
+
+      - name: Debug SSH auth on provisioned containers
         run: |
-          bundle exec rake 'litmus:provision_list[default]'
-          bundle exec rake 'litmus:install_agent'
+          sudo apt-get update -y >/dev/null && sudo apt-get install -y sshpass >/dev/null
+
+          for cid in $(docker ps -q); do
+            image=$(docker inspect --format '{{.Config.Image}}' "$cid")
+            echo "::group::${cid} (${image})"
+            echo "--- sshd -T (effective config, after all Includes) ---"
+            docker exec "$cid" sshd -T 2>&1 | grep -Ei '^(permitrootlogin|passwordauthentication|usepam|challengeresponseauthentication) ' || true
+            echo "--- root shadow entry ---"
+            docker exec "$cid" grep '^root:' /etc/shadow || true
+            echo "--- sshd service status ---"
+            docker exec "$cid" systemctl status sshd --no-pager 2>&1 || docker exec "$cid" service ssh status 2>&1 || true
+            echo "::endgroup::"
+          done
+
+          ruby -ryaml -e '
+            data = YAML.load_file("spec/fixtures/litmus_inventory.yaml")
+            data["groups"][0]["targets"].each do |t|
+              port = t["config"]["ssh"]["port"]
+              platform = t["facts"]["platform"]
+              puts "::group::ssh -vvv port #{port} (#{platform})"
+              system("sshpass -p root ssh -vvv -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 -p #{port} root@localhost true")
+              puts "::endgroup::"
+            end
+          '
+
+      - name: Install Puppet Agent
+        run: bundle exec rake 'litmus:install_agent'
+
+      - name: Install Modules
+        run: |
           bundle exec rake 'litmus:install_modules_from_directory'
           bundle exec rake 'litmus:install_module'
+
       - name: Run Tests
         run: bundle exec rake 'litmus:acceptance:parallel'
 
