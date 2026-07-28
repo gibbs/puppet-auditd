@@ -3,7 +3,6 @@ require 'spec_helper'
 describe 'auditd' do
   context 'supported operating systems' do
     audit_v2 = ['CentOS7', 'Debian10', 'RedHat7', 'Scientific7', 'Ubuntu20.04', 'Ubuntu18.04']
-    audit_v3 = ['AlmaLinux8', 'Debian11', 'RedHat8', 'Rocky8', 'Ubuntu22.04']
 
     on_supported_os.each do |os, facts|
       context "on #{os}" do
@@ -43,10 +42,16 @@ describe 'auditd' do
 
         if audit_v2.include?(test_os)
           it { is_expected.not_to contain_file('auditd-auditd-plugin-syslog.conf') }
+        else
+          it { is_expected.to contain_file('auditd-auditd-plugin-syslog.conf') }
         end
 
-        if audit_v3.include?(test_os)
-          it { is_expected.to contain_file('auditd-auditd-plugin-syslog.conf') }
+        it { is_expected.to contain_auditd__plugin('af_unix') }
+        it { is_expected.to contain_auditd__plugin('au-remote') }
+        it { is_expected.to contain_auditd__plugin('syslog') }
+
+        if facts[:os]['family'] == 'Debian'
+          it { is_expected.to contain_auditd__plugin('audispd-zos-remote') }
         end
 
         context 'documentation example' do
