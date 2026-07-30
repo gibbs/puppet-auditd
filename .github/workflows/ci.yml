@@ -73,12 +73,18 @@ jobs:
           ruby-version: '3.2'
           bundler-cache: true
 
-      - name: Provision Testing Environments
-        run: |
-          bundle exec rake 'litmus:provision_list[default]'
-          bundle exec rake 'litmus:install_agent'
-          bundle exec rake 'litmus:install_modules_from_directory'
-          bundle exec rake 'litmus:install_module'
+      - name: Provision Environments
+        run: bundle exec rake 'litmus:provision_list[default]'
+
+      - name: Install agent
+        run: bundle exec rake 'litmus:install_agent'
+
+      - name: Install dependencies
+        run: bundle exec rake 'litmus:install_modules_from_directory'
+
+      - name: Install module
+        run: bundle exec rake 'litmus:install_module'
+
       - name: Run Tests
         run: bundle exec rake 'litmus:acceptance:parallel'
 
