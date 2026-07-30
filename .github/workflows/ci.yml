@@ -84,7 +84,7 @@ jobs:
         run: bundle exec rake 'litmus:install_agent'
 
       - name: Install dependencies
-        run: bundle exec rake 'litmus:install_modules_from_directory'
+        run: bundle exec rake 'litmus:install_modules_from_directory[,,,true]'
 
       - name: Install module
         run: bundle exec rake 'litmus:install_module'
