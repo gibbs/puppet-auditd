@@ -46,6 +46,14 @@ describe 'auditd' do
           it { is_expected.to contain_file('auditd-auditd-plugin-syslog.conf') }
         end
 
+        it { is_expected.to contain_auditd__plugin('af_unix') }
+        it { is_expected.to contain_auditd__plugin('au-remote') }
+        it { is_expected.to contain_auditd__plugin('syslog') }
+
+        if facts[:os]['family'] == 'Debian'
+          it { is_expected.to contain_auditd__plugin('audispd-zos-remote') }
+        end
+
         context 'documentation example' do
           let(:params) do
             {

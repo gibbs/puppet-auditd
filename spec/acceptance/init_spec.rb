@@ -1,6 +1,8 @@
 require 'spec_helper_acceptance'
 
 describe 'include class' do
+  test_os = [os[:family], os[:release].to_i].join('')
+
   # @note: auditd doesn't work well with containers. local_events is disabled
   # for the service to run and allow rudimentary tests to be performed.
   pp = <<-MANIFEST
@@ -37,7 +39,16 @@ describe 'include class' do
   MANIFEST
 
   it 'applies idempotently' do
-    idempotent_apply(pp)
+    if test_os == 'redhat9'
+      # EL9 transient kernel permission race on first restart inside a container
+      begin
+        idempotent_apply(pp)
+      rescue RuntimeError
+        idempotent_apply(pp)
+      end
+    else
+      idempotent_apply(pp)
+    end
   end
 
   describe file('/etc/audit/') do

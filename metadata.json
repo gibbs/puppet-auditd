@@ -35,18 +35,21 @@
     {
       "operatingsystem": "AlmaLinux",
       "operatingsystemrelease": [
+        "9",
         "8"
       ]
     },
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
+        "9",
         "8"
       ]
     },
     {
       "operatingsystem": "Rocky",
       "operatingsystemrelease": [
+        "9",
         "8"
       ]
     }
