@@ -1,7 +1,7 @@
 # auditd
 
-[![Build Status](https://github.com/gibbs/puppet-auditd/workflows/CI/badge.svg)](https://github.com/gibbs/puppet-auditd/actions?query=workflow%3ACI)
-[![Release](https://github.com/gibbs/puppet-auditd/workflows/Release/badge.svg)](https://github.com/gibbs/puppet-auditd/actions?query=workflow%3ARelease)
+[![Build Status](https://github.com/gibbs/puppet-auditd/actions/workflows/ci.yml/badge.svg)](https://github.com/gibbs/puppet-auditd/actions/workflows/ci.yml)
+[![Release](https://github.com/gibbs/puppet-auditd/actions/workflows/release.yml/badge.svg)](https://github.com/gibbs/puppet-auditd/actions/workflows/release.yml)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/genv/auditd.svg?maxAge=2592000?style=plastic)](https://forge.puppet.com/genv/auditd)
 [![Apache-2 License](https://img.shields.io/github/license/gibbs/puppet-auditd.svg)](LICENSE)
 
