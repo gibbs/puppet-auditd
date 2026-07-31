@@ -4,6 +4,7 @@ default:
   images:
     - 'litmusimage/almalinux:9'
     - 'litmusimage/almalinux:8'
+    - 'litmusimage/debian:13'
     - 'litmusimage/debian:12'
     - 'litmusimage/debian:11'
     - 'litmusimage/rockylinux:9'
