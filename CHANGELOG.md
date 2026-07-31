@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v2.2.0](https://github.com/gibbs/puppet-auditd/tree/v2.2.0) (2026-07-31)
+
+[Full Changelog](https://github.com/gibbs/puppet-auditd/compare/v2.1.0...v2.2.0)
+
+### Added
+
+- feat: add support for RH9 family [\#37](https://github.com/gibbs/puppet-auditd/pull/37) ([gibbs](https://github.com/gibbs))
+
 ## [v2.1.0](https://github.com/gibbs/puppet-auditd/tree/v2.1.0) (2025-04-26)
 
 [Full Changelog](https://github.com/gibbs/puppet-auditd/compare/v2.0.1...v2.1.0)
